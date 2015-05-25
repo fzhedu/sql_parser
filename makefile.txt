@@ -1,0 +1,18 @@
+创建makefile步骤：
+1.传建文件夹 makefile_framework
+2.导入到eclipse
+3.复制如下文件到makefile_framework的根目录下
+	Authors //
+	build.sh
+	config.h.in
+	configure.ac
+	Makefile.am
+4.在每个子文件夹中加入Makefile.am
+
+注意的问题
+1.每个Makefile.am的.a文件引用顺序按照 引用文件在上，被引用文件在下，a-引用->b，那么a在上，b在下
+  这种情况在多个循环嵌套引用的时候尤其需要注意
+2.如果项目包含第三方静态库，那么
+	(1)安装sudo yum install boost*
+	(2)引用时加入include和.a文件
+另外一种方法，如OB中，在项目中加入库文件，然后在lib文件夹中加入.a文件，用的时候引用.a文件，这样简化安装 
