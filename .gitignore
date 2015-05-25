@@ -37,4 +37,5 @@ Build
 *.dat*
 include/
 .history
-
+ar-lib
+config.h.in~
