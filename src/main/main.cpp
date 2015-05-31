@@ -11,7 +11,7 @@
 #include "../../src/parser/sql_parser.h"
 using namespace std;
 int main() {
-	Parser* my_parser = new Parser();
-	my_parser->GetRawAST()->Print();
-	return 0;
+    Parser* my_parser = new Parser();
+    my_parser->GetRawAST()->Print();
+    return 0;
 }
