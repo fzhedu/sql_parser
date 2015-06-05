@@ -7,7 +7,7 @@
  * Description:
  */
 
-#include "ast_select_stmt.h"
+#include "./ast_select_stmt.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -28,6 +28,9 @@ void AstSelectList::Print(int level) const {
     cout << setw(level * 8) << " " << "|select list|" << endl;
     if (args_ != NULL) {
         args_->Print(level);
+    } else {
+        cout << setw(level * 8) << " " << "|select expr|" << endl;
+        cout << setw(level * 8) << " " << "|column| : *(ALL) " << endl;
     }
     if (next_ != NULL) {
         next_->Print(level + 1);
@@ -84,7 +87,6 @@ AstTable::AstTable(AstNodeType ast_node_type, string db_name, string table_name,
 }
 
 AstTable::~AstTable() {
-
 }
 
 void AstTable::Print(int level) const {
@@ -333,7 +335,8 @@ void AstSelectStmt::Print(int level) const {
     cout << setw(level * 8) << " " << "|select statement| " << endl;
     level++;
     select_list_->Print(level);
-    from_list_->Print(level);
+    if (from_list_ != NULL)
+        from_list_->Print(level);
     if (where_clause_ != NULL)
         where_clause_->Print(level);
     if (groupby_clause_ != NULL)

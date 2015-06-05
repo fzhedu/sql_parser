@@ -11,3 +11,7 @@ Install cpp_parser:
 Uninstall cpp_parser:
 1. make distclean
 2. ./build clean
+
+
+bison -d sql.ypp
+flex sql.l

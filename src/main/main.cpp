@@ -6,12 +6,18 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
+#include <iostream>  //NOLINT
 #include <string>
 #include "../../src/parser/sql_parser.h"
-using namespace std;
+
 int main() {
-    Parser* my_parser = new Parser();
-    my_parser->GetRawAST()->Print();
+    char loopflag = ' ';
+    do {
+        Parser* my_parser = new Parser();
+        my_parser->GetRawAST()->Print();
+        delete my_parser;
+        std::cout << "want to continue? y or n ?" << std::endl;
+        std::cin >> loopflag;
+    } while (loopflag == 'y');
     return 0;
 }

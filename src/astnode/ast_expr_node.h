@@ -7,9 +7,9 @@
  * Description:
  */
 
-#ifndef AST_EXPR_NODE_H_
+#ifndef AST_EXPR_NODE_H_    //NOLINT
 #define AST_EXPR_NODE_H_
-#include "ast_node.h"
+#include "./ast_node.h"
 #include <string>
 class AstExprConst : public AstNode {
  public:
@@ -27,16 +27,12 @@ class AstExprUnary : public AstNode {
     AstNode* arg0_;
     std::string expr_str_;
 };
+
 class AstExprString : public AstNode {
  public:
-    /*enum TrimPara{
-     LEADING,
-     TRAILING,
-     BOTH,
-     };*/
     AstExprString(AstNodeType ast_node_type, AstNode* arg0, AstNode* arg1,
                   AstNode* arg2);
-    AstExprString(AstNodeType ast_node_type, std::string trim_para,
+    AstExprString(AstNodeType ast_node_type, std::string expr_para,
                   AstNode* arg0, AstNode* arg1);
     ~AstExprString();
     void Print(int level = 0) const;
@@ -44,8 +40,9 @@ class AstExprString : public AstNode {
     AstNode* arg1_;
     AstNode* arg2_;
     std::string expr_str_;
-    std::string trim_para_;
+    AstExprConst* expr_para_;
 };
+
 class AstExprCalBinary : public AstNode {
  public:
     AstExprCalBinary(AstNodeType ast_node_type, AstNode* arg0, AstNode* arg1);
@@ -96,4 +93,4 @@ class AstExprList : public AstNode {
     AstNode* next_;
 };
 
-#endif /* AST_EXPR_NODE_H_ */
+#endif /* AST_EXPR_NODE_H_ */    //NOLINT
