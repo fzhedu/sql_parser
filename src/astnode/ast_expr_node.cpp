@@ -8,10 +8,17 @@
  */
 
 #include "./ast_expr_node.h"
-#include <iostream>
+#include <iostream>   //  NOLINT
 #include <iomanip>
 #include <string>
-using namespace std;
+#include <bitset>
+using std::cout;
+using std::endl;
+using std::cin;
+using std::string;
+using std::setw;
+using std::bitset;
+
 AstExprConst::AstExprConst(AstNodeType ast_node_type, std::string data)
         : AstNode(ast_node_type),
           data_(data) {
@@ -154,7 +161,7 @@ void AstExprCalBinary::Print(int level) const {
             cout << setw(level * 8) << "RIGHT_SHIFT" << endl;
             break;
         }
-        default : {
+        default: {
             cout << endl;
         }
     }
@@ -218,6 +225,7 @@ void AstExprList::Print(int level) const {
 AstExprString::AstExprString(AstNodeType ast_node_type, AstNode* arg0,
                              AstNode* arg1, AstNode* arg2)
         : AstNode(ast_node_type),
+          expr_para_(NULL),
           arg0_(arg0),
           arg1_(arg1),
           arg2_(arg2) {
@@ -247,3 +255,39 @@ void AstExprString::Print(int level) const {
     if (arg2_ != NULL)
         arg2_->Print(level + 3);
 }
+
+AstExprJoin::AstExprJoin(AstNodeType ast_node_type, int join_type,
+                         AstNode* reference, AstNode* left_right_next,
+                         AstNode* condition)
+        : AstNode(ast_node_type),
+          join_type_(join_type),
+          reference_(reference),
+          left_right_next_(left_right_next),
+          condition_(condition) {
+}
+
+AstExprJoin::~AstExprJoin() {
+    delete reference_;
+    delete left_right_next_;
+    delete condition_;
+}
+
+void AstExprJoin::Print(int level) const {
+    bitset<10>bit_num;
+    bit_num = join_type_;
+    cout << setw(level * 8) << " " << "|expr join|" << endl;
+    cout << setw((level + 1) * 8) << " " << "|reference expr|" << endl;
+    if (reference_ != NULL)
+        reference_ -> Print(level +1);
+    cout << setw((level + 1) * 8) << " " << "|join type|" << endl;
+    cout << setw((level + 1) * 8) << " " << bit_num << endl;
+    if (left_right_next_ != NULL) {
+        cout << setw((level + 1) * 8) << " " <<"|left or right |" << endl;
+        left_right_next_ -> Print(level + 1);
+    }
+    if (condition_ != NULL) {
+        cout << setw((level + 1) * 8) << " " << "|condition|" << endl;
+        condition_ -> Print(level +1);
+    }
+}
+

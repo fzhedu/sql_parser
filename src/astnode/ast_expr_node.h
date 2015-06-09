@@ -92,5 +92,16 @@ class AstExprList : public AstNode {
     AstNode* expr_;
     AstNode* next_;
 };
+class AstExprJoin : public AstNode {
+ public:
+    AstExprJoin(AstNodeType ast_node_type, int join_type, AstNode* reference,
+                AstNode* left_right_next, AstNode* condition);
+    ~AstExprJoin();
+    void Print(int level = 0) const;
+    int join_type_;
+    AstNode* reference_;
+    AstNode* left_right_next_;
+    AstNode* condition_;
+};
 
 #endif /* AST_EXPR_NODE_H_ */    //NOLINT

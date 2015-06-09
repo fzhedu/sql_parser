@@ -605,29 +605,17 @@ nature 32
 straight_join -1
 */
 
-
-join_table:// enumerate every different paramters
+join_table:
 	table_reference opt_inner_cross JOIN table_factor opt_join_condition
-	{
-		//$$=new Join(t_join, $2, $1, $4, $5,result->node_pointer);
-	}              
+	{ $$ = new AstExprJoin(AST_INNER_CROSS_JOIN, $2, $1, $4, $5) ;}
 	| table_reference STRAIGHT_JOIN table_factor 
-	{
-		//$$=newJoin(t_join, -1, $1, $3, NULL,result->node_pointer);
-	}
+	{ $$ = new AstExprJoin(AST_STRAIGHT_JOIN, -1, $1, $3, NULL);}
 	| table_reference STRAIGHT_JOIN table_factor ON expr  
-	{
-		//Node *m=newCondition(t_condition, 1, $5,result->node_pointer);
-		//$$=newJoin(t_join, -1, $1, $3, m,result->node_pointer);
-	}
+	{ $$ = new AstExprJoin(AST_STRAIGHT_JOIN_ON, -1, $1, $3, $5);}
   	| table_reference left_or_right opt_outer JOIN table_factor join_condition
-	{
-		//$$=newJoin(t_join, $2+$3, $1, $5, $6,result->node_pointer);
-	}
+	{ $$ = new AstExprJoin(AST_LEFT_RIGHT_JOIN_CONDITION, $2+$3, $1, $5, $6);}
   	| table_reference NATURAL opt_left_or_right_outer JOIN table_factor
-	{
-		//$$=newJoin(t_join, 32 + $3, $1, $5, NULL,result->node_pointer);
-	}
+	{ $$ = new AstExprJoin(AST_NATURAL_LR_JOIN, 32 + $3, $1, $5, NULL);}
   	;
 
 opt_inner_cross: 	{ $$ = 0; }
@@ -636,7 +624,7 @@ opt_inner_cross: 	{ $$ = 0; }
 	;
 
 opt_outer:	{ $$ = 4; }
-	| OUTER	{$$ = 4; }
+	| OUTER	{ $$ = 4; }
    	;
 
 left_or_right: 
@@ -650,7 +638,7 @@ opt_left_or_right_outer:
 	| /* nil */ 		{ $$ = 0; }
 	;
 
-opt_join_condition: /* nil */	{$$=NULL;}
+opt_join_condition: 	{$$=NULL;}
 	| join_condition	{$$=$1;}
 	;
 /*
