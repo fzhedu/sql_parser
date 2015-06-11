@@ -535,8 +535,8 @@ opt_into_list:			{ $$=NULL; }
    ;
 
 column_list: 
-	NAME 					{ }
-  	| NAME ',' column_list 	{ }
+	NAME 					{ $$ = new AstColumn(AST_COLUMN, string("NULL"), string($1));}
+  	| NAME ',' column_list 	{ $$ = new AstColumn(AST_COLUMN, string("NULL"), string($1), $3);}
   	;
 
 select_opts:							{ $$ = 0; }
@@ -649,11 +649,11 @@ using 2
 join_condition: 
 	ON expr 
     {
-    //	$$=newCondition(t_condition, 1, $2,result->node_pointer);
+    	$$ = new AstExprUnary(AST_CONDITION_ON_EXPR, $2);
     }
     | USING '(' column_list ')' 
     {
-    //	$$=newCondition(t_condition, 2, $3,result->node_pointer);
+    	$$ = new AstExprUnary(AST_CONDITION_USING_LIST, $3);
     }
     ;
 

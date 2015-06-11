@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
+
 AstSelectList::AstSelectList(AstNodeType ast_node_type, bool is_all,
                              AstNode* args, AstNode* next)
         : AstNode(ast_node_type),
@@ -289,18 +290,32 @@ AstColumn::AstColumn(AstNodeType ast_node_type, std::string relation_name,
                      std::string column_name)
         : AstNode(ast_node_type),
           relation_name_(relation_name),
-          column_name_(column_name) {
+          column_name_(column_name),
+          next_(NULL) {
+}
+
+AstColumn::AstColumn(AstNodeType ast_node_type, std::string relation_name,
+                     std::string column_name, AstNode* next)
+        : AstNode(ast_node_type),
+          relation_name_(relation_name),
+          column_name_(column_name),
+          next_(next) {
 }
 
 AstColumn::~AstColumn() {
+    delete next_;
 }
 
 void AstColumn::Print(int level) const {
     cout << setw(level * 8) << " " << "|column| " << endl;
-    level++;
     cout << setw(level * 8) << " " << "relation name: " << relation_name_
             << endl;
     cout << setw(level * 8) << " " << "column name: " << column_name_ << endl;
+
+    if (next_ != NULL) {
+        next_ -> Print(level);
+    }
+    level++;
 }
 
 AstSelectStmt::AstSelectStmt(AstNodeType ast_node_type, int select_opts,

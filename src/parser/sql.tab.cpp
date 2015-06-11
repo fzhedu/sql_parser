@@ -1971,13 +1971,13 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
   case 31:
 /* Line 868 of glr.c  */
 #line 538 "sql.ypp"
-    { }
+    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN, string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval)));}
     break;
 
   case 32:
 /* Line 868 of glr.c  */
 #line 539 "sql.ypp"
-    { }
+    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN, string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 33:
@@ -2242,7 +2242,7 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
 /* Line 868 of glr.c  */
 #line 651 "sql.ypp"
     {
-    //	$$=newCondition(t_condition, 1, $2,result->node_pointer);
+    	((*yyvalp).ast_node) = new AstExprUnary(AST_CONDITION_ON_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));
     }
     break;
 
@@ -2250,7 +2250,7 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
 /* Line 868 of glr.c  */
 #line 655 "sql.ypp"
     {
-    //	$$=newCondition(t_condition, 2, $3,result->node_pointer);
+    	((*yyvalp).ast_node) = new AstExprUnary(AST_CONDITION_USING_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node));
     }
     break;
 
