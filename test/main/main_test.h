@@ -11,6 +11,6 @@
 #define MAIN_TEST_H_
 
 #include "../parser/sql_parser_test.cpp"
-
+#include "../common/my_glog_test.cpp"
 
 #endif /* MAIN_TEST_H_ */

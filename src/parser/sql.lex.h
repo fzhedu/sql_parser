@@ -134,7 +134,7 @@ typedef void* yyscan_t;
 
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
-typedef struct yy_buffer_state *YY_BUFFER_STATE;
+typedef struct yy_buffer_state* YY_BUFFER_STATE;
 #endif
 
 #ifndef YY_TYPEDEF_YY_SIZE_T

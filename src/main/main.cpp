@@ -10,15 +10,19 @@
 #include <string>
 #include "../../src/parser/sql_parser.h"
 #include <stdio.h>
-using namespace std;
-int main() {
+#include <glog/logging.h>
+#include <gflags/gflags.h>
+#include "../../src/common/my_glog.h"
+int main(int argc,char* argv[]) {
+    MyGlog my_glog(argv[0]);
     int flag = 1;
-    while(flag) {
+    while (flag) {
         Parser* my_parser = new Parser();
         my_parser->GetRawAST()->Print();
         delete my_parser;
         printf("continue 1 or not 0!\n");
-        scanf("%d",&flag);
+        scanf("%d", &flag);
     }
-	return 0;
+//    my_glog.~MyGlog();
+    return 0;
 }

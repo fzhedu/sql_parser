@@ -8,9 +8,13 @@
  */
 #include "main_test.h"
 #include <stdio.h>
+#include "../../src/common/my_glog.h"
 
-int main() {
+int main(int argc, char* argv[]) {
+    MyGlog my_glog(argv[0]);
 	test_multi_thread();
+    test_my_glog();
+//    my_glog.~MyGlog();
 	return 0;
 }
 
