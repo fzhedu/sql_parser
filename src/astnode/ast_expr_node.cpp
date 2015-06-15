@@ -42,7 +42,40 @@ AstExprUnary::~AstExprUnary() {
 
 void AstExprUnary::Print(int level) const {
     cout << setw(level * 8) << " " << "|expr unary|" << endl;
-    arg0_->Print(level + 1);
+    switch (ast_node_type_) {
+        case AST_COUNT_ALL: {
+            cout << setw(level * 8) << " " << "|COUNT expr|" << endl;
+            break;
+        }
+        case AST_COUNT_EXPR: {
+            cout << setw(level * 8) << " " << "|COUNT expr|" << endl;
+            break;
+        }
+        case AST_SUM_EXPR: {
+            cout << setw(level * 8) << " " << "|SUM expr|" << endl;
+            break;
+        }
+        case AST_MIN_EXPR: {
+            cout << setw(level * 8) << " " << "|MIN expr|" << endl;
+            break;
+        }
+        case AST_MAX_EXPR: {
+            cout << setw(level * 8) << " " << "|MAX expr|" << endl;
+            break;
+        }
+        case AST_AVG_EXPR: {
+            cout << setw(level * 8) << " " << "|AVG expr|" << endl;
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    if (arg0_ != NULL) {
+        arg0_->Print(level + 1);
+    } else {
+        cout << setw((level + 1) * 8) << " " << "column name: *(All)" << endl;
+    }
 }
 
 AstExprCalBinary::AstExprCalBinary(AstNodeType ast_node_type, AstNode* arg0,
@@ -110,55 +143,59 @@ void AstExprCalBinary::Print(int level) const {
     cout << setw(level * 8) << " " << "|expr binary|";
     switch (ast_node_type_) {
         case AST_EXPR_ADD: {
-            cout << setw(level * 8) << '+' << endl;
+            cout << " " << '+' << endl;
             break;
         }
         case AST_EXPR_SUB: {
-            cout << setw(level * 8) << '-' << endl;
+            cout << " " << '-' << endl;
             break;
         }
         case AST_EXPR_MUL: {
-            cout << setw(level * 8) << '*' << endl;
+            cout << " " << '*' << endl;
             break;
         }
         case AST_EXPR_DIV: {
-            cout << setw(level * 8) << '/' << endl;
+            cout << " " << '/' << endl;
             break;
         }
         case AST_EXPR_MOD: {
-            cout << setw(level * 8) << '%' << endl;
+            cout << " " << '%' << endl;
+            break;
+        }
+        case AST_EXPR_MOD_SIGN: {
+            cout << " " << '%' << endl;
             break;
         }
         case AST_EXPR_AND: {
-            cout << setw(level * 8) << "AND" << endl;
+            cout << " " << "AND" << endl;
             break;
         }
         case AST_EXPR_OR: {
-            cout << setw(level * 8) << "OR" << endl;
+            cout << " " << "OR" << endl;
             break;
         }
         case AST_EXPR_XOR: {
-            cout << setw(level * 8) << "XOR" << endl;
+            cout << " " << "XOR" << endl;
             break;
         }
         case AST_EXPR_BIT_OR: {
-            cout << setw(level * 8) << "|" << endl;
+            cout << " " << "|" << endl;
             break;
         }
         case AST_EXPR_BIT_AND: {
-            cout << setw(level * 8) << "&" << endl;
+            cout << " " << "&" << endl;
             break;
         }
         case AST_EXPR_BIT_XOR: {
-            cout << setw(level * 8) << "^" << endl;
+            cout << " " << "^" << endl;
             break;
         }
         case AST_EXPR_LSHIFT: {
-            cout << setw(level * 8) << "LEFT_SHIFT" << endl;
+            cout << " " << "LEFT_SHIFT" << endl;
             break;
         }
         case AST_EXPR_RSHIFT: {
-            cout << setw(level * 8) << "RIGHT_SHIFT" << endl;
+            cout << " " << "RIGHT_SHIFT" << endl;
             break;
         }
         default: {
@@ -172,7 +209,41 @@ void AstExprCalBinary::Print(int level) const {
 }
 
 void AstExprCmpBinary::Print(int level) const {
-    cout << setw(level * 8) << " " << "|expr binary|" << endl;
+    cout << setw(level * 8) << " " << "|expr binary|";
+    switch (ast_node_type_) {
+        case AST_EXPR_EQUAL: {
+            cout << " " << '=' << endl;
+            break;
+        }
+        case AST_EXPR_LESS: {
+            cout << " " << '<' << endl;
+            break;
+        }
+        case AST_EXPR_MORE: {
+            cout << " " << '>' << endl;
+            break;
+        }
+        case AST_EXPR_LESSEQU: {
+            cout << " " << "<=" << endl;
+            break;
+        }
+        case AST_EXPR_MOREEQU: {
+            cout << " " << ">=" << endl;
+            break;
+        }
+        case AST_EXPR_INEQUAL: {
+            cout << " " << "!=" << endl;
+            break;
+        }
+        case AST_EXPR_UNKNOWN: {
+            cout << " " << "UNKNOWN" << endl;
+            break;
+        }
+        default: {
+            cout << endl;
+        }
+    }
+
     if (arg0_ != NULL)
         arg0_->Print(level + 1);
     if (arg1_ != NULL)
@@ -219,7 +290,7 @@ void AstExprList::Print(int level) const {
     if (expr_ != NULL)
         expr_->Print(level + 1);
     if (next_ != NULL)
-        next_->Print(level + 1);
+        next_->Print(level);
 }
 
 AstExprString::AstExprString(AstNodeType ast_node_type, AstNode* arg0,
@@ -273,21 +344,46 @@ AstExprJoin::~AstExprJoin() {
 }
 
 void AstExprJoin::Print(int level) const {
-    bitset<10>bit_num;
+    bitset < 10 > bit_num;
     bit_num = join_type_;
     cout << setw(level * 8) << " " << "|expr join|" << endl;
     cout << setw((level + 1) * 8) << " " << "|reference expr|" << endl;
     if (reference_ != NULL)
-        reference_ -> Print(level +1);
-    cout << setw((level + 1) * 8) << " " << "|join type|" << endl;
-    cout << setw((level + 1) * 8) << " " << bit_num << endl;
+        reference_->Print(level + 1);
+    cout << setw((level + 1) * 8) << " " << "|join type|";
+    if (bit_num[9] == 1) {
+        cout << " " << "straight join" << endl;
+    } else {
+        if (bit_num[0] == 1) {
+            cout << " " << "inner join,";
+        }
+        if (bit_num[1] == 1) {
+            cout << " " << "cross join,";
+        }
+        if (bit_num[2] == 1) {
+            cout << " " << "outer join,";
+        }
+        if (bit_num[3] == 1) {
+            cout << " " << "left join,";
+        }
+        if (bit_num[4] == 1) {
+            cout << " " << "right join,";
+        }
+        if (bit_num[5] == 1) {
+            cout << " " << "natural join,";
+        }
+    }
+    if (join_type_ == 0)
+        cout << " " << "join";
+    cout << endl;
+    // cout << setw((level + 1) * 8) << " " << bit_num << endl;
     if (left_right_next_ != NULL) {
-        cout << setw((level + 1) * 8) << " " <<"|left or right |" << endl;
-        left_right_next_ -> Print(level + 1);
+        cout << setw((level + 1) * 8) << " " << "|left or right |" << endl;
+        left_right_next_->Print(level + 1);
     }
     if (condition_ != NULL) {
         cout << setw((level + 1) * 8) << " " << "|condition|" << endl;
-        condition_ -> Print(level +1);
+        condition_->Print(level + 1);
     }
 }
 
