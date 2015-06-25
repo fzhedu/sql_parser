@@ -12,7 +12,7 @@ parser_SOURCES = main.cpp
 parser_LDADD =       \
 				../parser/lib_parser.a	 \
 				../astnode/lib_astnode.a	\
-				../common/lib_myglog.a		\
+				../common/lib_logging.a		\
 				/usr/local/lib/libgflags.a	\
 				/usr/local/lib/libgflags.so	\
 				/usr/local/lib/libglog.a	\

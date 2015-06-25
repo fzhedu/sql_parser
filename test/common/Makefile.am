@@ -7,7 +7,7 @@ LDADD =		\
 			/usr/local/lib/libglog.a	\
 			/usr/local/lib/libglog.so	
 
-noinst_LIBRARIES=lib_test_myglog.a
+noinst_LIBRARIES=lib_test_logging.a
 
-lib_test_myglog_a_SOURCES = \
-	my_glog_test.cpp
+lib_test_logging_a_SOURCES = \
+	logging_test.cpp

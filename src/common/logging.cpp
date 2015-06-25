@@ -7,7 +7,7 @@
  * Description:
  */
 
-#include "my_glog.h"
+#include "logging.h"
 #include <stdlib.h>
 #include <iosfwd>
 #include <string>
@@ -16,17 +16,16 @@
 //set output log directory
 #define LOGDIR "mylog"
 #define MKDIR "mkdir -p "LOGDIR
-void GlogSignalHandle(const char* data, int size)
-{
-    std::string str = std::string(data,size);
+void GlogSignalHandle(const char* data, int size) {
+    std::string str = std::string(data, size);
     /*
-    std::ofstream fs("glog_dump.log",std::ios::app);
-    fs<<str;
-    fs.close();
-    */
+     std::ofstream fs("glog_dump.log",std::ios::app);
+     fs<<str;
+     fs.close();
+     */
     LOG(ERROR)<<str;
 }
-MyGlog::MyGlog(char* program) {
+Logging::Logging(char* program) {
     system(MKDIR);
 
     google::InitGoogleLogging(program);
@@ -36,31 +35,31 @@ MyGlog::MyGlog(char* program) {
     // set standard output level>=()
 //    google::SetStderrLogging(google::INFO);
 
-    // set standard output color
-    FLAGS_colorlogtostderr=true;
+// set standard output color
+    FLAGS_colorlogtostderr = true;
 
     // set output path for different level
-    FLAGS_log_dir =LOGDIR;
+    FLAGS_log_dir = LOGDIR;
 //    google::SetLogDestination(google::ERROR,"log/error_");
 //    google::SetLogDestination(google::INFO,LOGDIR"/INFO_");
 //    google::SetLogDestination(google::WARNING,LOGDIR"/WARNING_");
 //    google::SetLogDestination(google::ERROR,LOGDIR"/ERROR_");
 
-    // set every time output cache, default = 30, now to 0
-    FLAGS_logbufsecs =0;
-    FLAGS_max_log_size =100;
+// set every time output cache, default = 30, now to 0
+    FLAGS_logbufsecs = 0;
+    FLAGS_max_log_size = 100;
     FLAGS_stop_logging_if_full_disk = true;
 
     // set extend name of file
 //    google::SetLogFilenameExtension("91_");
 
-    // catch core dumped
+// catch core dumped
     google::InstallFailureSignalHandler();
     // set self output way when catch SIGSEGV signal
     google::InstallFailureWriter(&GlogSignalHandle);
 }
 
-MyGlog::~MyGlog() {
+Logging::~Logging() {
 //    google::ShutDownCommandLineFlags();
     google::ShutdownGoogleLogging();
 }

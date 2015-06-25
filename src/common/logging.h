@@ -7,16 +7,16 @@
  * Description:
  */
 
-#ifndef MY_GLOG_H_
-#define MY_GLOG_H_
+#ifndef SQL_PARSER_SRC_COMMON_LOGGING_H_
+#define SQL_PARSER_SRC_COMMON_LOGGING_H_
 #include <glog/logging.h>
 #include <glog/raw_logging.h>
 #include <gflags/gflags.h>
 void GlogSignalHandle(const char* data, int size);
-class MyGlog {
+class Logging {
  public:
-    MyGlog(char* program);
-    ~MyGlog();
+    Logging(char* program);
+    ~Logging();
 };
 
-#endif /* MY_GLOG_H_ */
+#endif /* SQL_PARSER_SRC_COMMON_LOGGING_H_ */

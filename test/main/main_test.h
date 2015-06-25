@@ -10,7 +10,7 @@
 #ifndef MAIN_TEST_H_
 #define MAIN_TEST_H_
 
+#include "../common/logging_test.cpp"
 #include "../parser/sql_parser_test.cpp"
-#include "../common/my_glog_test.cpp"
 
 #endif /* MAIN_TEST_H_ */

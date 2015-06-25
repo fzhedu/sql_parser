@@ -12,9 +12,10 @@
 #include <stdio.h>
 #include <glog/logging.h>
 #include <gflags/gflags.h>
-#include "../../src/common/my_glog.h"
-int main(int argc,char* argv[]) {
-    MyGlog my_glog(argv[0]);
+
+#include "../common/logging.h"
+int main(int argc, char* argv[]) {
+    Logging my_glog(argv[0]);
     int flag = 1;
     while (flag) {
         Parser* my_parser = new Parser();

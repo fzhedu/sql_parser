@@ -13,6 +13,6 @@ parser_test_LDADD =       \
 	 ../parser/lib_test_parser.a	\
 	 ../../src/parser/lib_parser.a	\
 	 ../../src/astnode/lib_astnode.a	\
-	 ../../src/common/lib_myglog.a	\
+	 ../../src/common/lib_logging.a	\
 	 /usr/local/lib/libglog.a	\
 	 /usr/local/lib/libglog.so	

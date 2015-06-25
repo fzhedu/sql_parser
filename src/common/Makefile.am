@@ -10,6 +10,6 @@ LDADD =		\
 			/usr/local/lib/libglog.so	
 
 
-noinst_LIBRARIES=lib_myglog.a
-lib_myglog_a_SOURCES = \
-	my_glog.cpp			my_glog.h 
+noinst_LIBRARIES=lib_logging.a
+lib_logging_a_SOURCES = \
+	logging.cpp			logging.h 
