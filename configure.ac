@@ -14,10 +14,12 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  src/common/Makefile
   src/astnode/Makefile
   src/parser/Makefile
   src/main/Makefile
   test/Makefile
+  test/common/Makefile
   test/parser/Makefile
   test/main/Makefile
 ])

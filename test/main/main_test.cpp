@@ -9,10 +9,13 @@
 #include "main_test.h"
 #include <stdio.h>
 
-int main() {
-	test_multi_thread();
-	return 0;
+#include "../../src/common/logging.h"
+
+int main(int argc, char* argv[]) {
+    Logging my_glog(argv[0]);
+    test_multi_thread();
+    test_my_glog();
+//    my_glog.~MyGlog();
+    return 0;
 }
-
-
 

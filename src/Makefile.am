@@ -1,2 +1,2 @@
-SUBDIRS = astnode  parser main
-DIST_SUBDIRS = astnode parser main
+SUBDIRS = common astnode parser main
+DIST_SUBDIRS = common astnode parser main
