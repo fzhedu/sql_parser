@@ -40,3 +40,11 @@ Build
 *.dat*
 include/
 .history
+<<<<<<< HEAD
+ar-lib
+lex.yy.c
+parser
+parser_test
+config.h.in~
+=======
+>>>>>>> refs/remotes/origin/fzh0629
