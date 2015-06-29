@@ -10,6 +10,8 @@
 #include <string>
 #include "../../src/astnode/ast_node.h"
 #include "../../src/parser/sql_parser.h"
+#include <glog/logging.h>
+#include <glog/raw_logging.h>
 using namespace std;
 #define THREAD_NUM 5	//thread number, test for guaranteeing the parser is reentrant
 string SqlStmt[THREAD_NUM];
@@ -20,6 +22,8 @@ void* my_thread(void* args) {
 	AstNode* my_ast = my_parser->GetRawAST();
 	MyAst[id] = my_ast;	//save parser result
 //	my_ast->Print();
+	RAW_LOG(INFO,"one thread over!");
+
 	return NULL;
 }
 void test_multi_thread() {
@@ -27,13 +31,14 @@ void test_multi_thread() {
 	SqlStmt[1] = string("select a as A from tb as TB where c group by d having e order by f limit 10,3;");
 	pthread_t ptid[THREAD_NUM];
 	int id[THREAD_NUM];
+	FLAGS_logtostderr=1;
 	for (int i = 0; i < THREAD_NUM; i++) {
 		id[i] = i;
 		int flag = pthread_create(&ptid[i], NULL, my_thread, &id[i]);
 		if (flag != 0) {
-			printf("failed create my thread\n");
+		    LOG(WARNING) << "warning:failed create my thread";
 		} else {
-			printf("succeed create my thread\n");
+			LOG(INFO)<<"info:succeed create my thread";
 		}
 	}
 	for (int i = 0; i < THREAD_NUM; i++) {

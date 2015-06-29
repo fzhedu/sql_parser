@@ -7,7 +7,9 @@ Default
 Config.cpp
 Debug.h
 install/
-autom4te.cache/
+autom4te.cache
+src/main/parser
+test/main/parser_test
 config.guess
 config.status
 config.sub
@@ -32,11 +34,15 @@ configure
 claims.log
 doc
 conf
+conf/config
 build
 Build
 *.dat*
 include/
 .history
+<<<<<<< HEAD
 ar-lib
 lex.yy.c
 config.h.in~
+=======
+>>>>>>> refs/remotes/origin/fzh0629
