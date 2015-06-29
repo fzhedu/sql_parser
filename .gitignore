@@ -38,4 +38,5 @@ Build
 include/
 .history
 ar-lib
+lex.yy.c
 config.h.in~
