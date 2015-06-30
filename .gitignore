@@ -30,7 +30,7 @@ Makefile
 config.h
 config.h.in
 config.log
-configure
+./configure
 claims.log
 doc
 conf
@@ -40,3 +40,4 @@ Build
 *.dat*
 include/
 .history
+.svn/*
