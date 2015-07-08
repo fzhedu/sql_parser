@@ -1,5 +1,5 @@
 AC_INIT([cpp_parser], [0.1], [fzhedu@gmail.com])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AM_INIT_AUTOMAKE([-Wall foreign])
 AC_PROG_LIBTOOL
 CPPFLAGS="-w -O2 -DTHERON_XS"
 CXXFLAGS=${CXXFLAGS="-g"}
