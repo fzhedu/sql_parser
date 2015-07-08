@@ -39,7 +39,7 @@ stamp-h1
 .svn/*
 test/main/parser_test
 缺省值
-thirdparty/gflags-2.0/m4
+./thirdparty/gflags-2.0/m4
 thirdparty/gflags-2.0/lib*
 thirdparty/gflags-2.0/gflags*
 thirdparty/glog-0.3.3/signal*
