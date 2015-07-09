@@ -38,15 +38,3 @@ src/main/parser
 stamp-h1
 .svn/*
 test/main/parser_test
-thirdparty/gflags-2.0/m4/
-thirdparty/gflags-2.0/lib*
-thirdparty/gflags-2.0/gflags*
-thirdparty/glog-0.3.3/signal*
-thirdparty/glog-0.3.3/logging*
-thirdparty/glog-0.3.3/utilities*
-thirdparty/glog-0.3.3/stl_logging*
-thirdparty/glog-0.3.3/symbolize*
-thirdparty/glog-0.3.3/symbolize*
-thirdparty/glog-0.3.3/stacktrace*
-thirdparty/glog-0.3.3/demangle*
-thirdparty/glog-0.3.3/libglog*
