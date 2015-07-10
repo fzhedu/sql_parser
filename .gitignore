@@ -38,3 +38,4 @@ src/main/parser
 stamp-h1
 .svn/*
 test/main/parser_test
+!/thirdparty/
