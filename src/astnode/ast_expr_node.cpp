@@ -273,6 +273,7 @@ void AstExprTernary::Print(int level) const {
     if (arg2_ != NULL)
         arg2_->Print(level + 1);
 }
+
 AstExprList::AstExprList(AstNodeType ast_node_type, AstNode* expr,
                          AstNode* next)
         : AstNode(ast_node_type),
@@ -288,7 +289,7 @@ AstExprList::~AstExprList() {
 void AstExprList::Print(int level) const {
     cout << setw(level * 8) << " " << "|expr list|" << endl;
     if (expr_ != NULL)
-        expr_->Print(level + 1);
+        expr_->Print(level);
     if (next_ != NULL)
         next_->Print(level);
 }
