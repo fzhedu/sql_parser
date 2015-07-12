@@ -31,8 +31,6 @@
 
 #ifdef HAVE_USING_OPERATOR
 
-#include "glog/stl_logging.h"
-
 #include <iostream>
 #include <map>
 #include <ostream>
@@ -40,15 +38,23 @@
 #include <vector>
 
 #ifdef __GNUC__
-# include <ext/hash_map>
-# include <ext/hash_set>
+// C++0x isn't enabled by default in GCC and libc++ does not have
+// non-standard ext/* and tr1/unordered_*.
+# if defined(_LIBCPP_VERSION)
+#  define GLOG_STL_LOGGING_FOR_UNORDERED
+# else
+#  define GLOG_STL_LOGGING_FOR_EXT_HASH
+#  define GLOG_STL_LOGGING_FOR_EXT_SLIST
+#  define GLOG_STL_LOGGING_FOR_TR1_UNORDERED
+# endif
 #endif
 
 #include "glog/logging.h"
+#include "glog/stl_logging.h"
 #include "googletest.h"
 
 using namespace std;
-#ifdef __GNUC__
+#ifdef GLOG_STL_LOGGING_FOR_EXT_HASH
 using namespace __gnu_cxx;
 #endif
 
@@ -83,7 +89,7 @@ void TestSTLLogging() {
     CHECK_EQ(m, copied_m);  // This must compile.
   }
 
-#ifdef __GNUC__
+#ifdef GLOG_STL_LOGGING_FOR_EXT_HASH
   {
     // Test a hashed simple associative container.
     hash_set<int> hs;
@@ -98,7 +104,7 @@ void TestSTLLogging() {
   }
 #endif
 
-#ifdef __GNUC__
+#ifdef GLOG_STL_LOGGING_FOR_EXT_HASH
   {
     // Test a hashed pair associative container.
     hash_map<int, string> hm;
@@ -145,7 +151,7 @@ void TestSTLLogging() {
     CHECK_EQ(m, copied_m);  // This must compile.
   }
 
-#ifdef __GNUC__
+#ifdef GLOG_STL_LOGGING_FOR_EXT_HASH
   {
     // Test a hashed simple associative container.
     // Use a user defined hash function.

@@ -31,6 +31,7 @@
 
 #include "utilities.h"
 
+#include <algorithm>
 #include <assert.h>
 #include <iomanip>
 #include <string>
@@ -179,6 +180,42 @@ GLOG_DEFINE_string(log_backtrace_at, "",
 // TODO(hamaji): consider windows
 #define PATH_SEPARATOR '/'
 
+#ifndef HAVE_PREAD
+#if defined(OS_WINDOWS)
+#include <BaseTsd.h>
+#define ssize_t SSIZE_T
+#endif
+static ssize_t pread(int fd, void* buf, size_t count, off_t offset) {
+  off_t orig_offset = lseek(fd, 0, SEEK_CUR);
+  if (orig_offset == (off_t)-1)
+    return -1;
+  if (lseek(fd, offset, SEEK_CUR) == (off_t)-1)
+    return -1;
+  ssize_t len = read(fd, buf, count);
+  if (len < 0)
+    return len;
+  if (lseek(fd, orig_offset, SEEK_SET) == (off_t)-1)
+    return -1;
+  return len;
+}
+#endif  // !HAVE_PREAD
+
+#ifndef HAVE_PWRITE
+static ssize_t pwrite(int fd, void* buf, size_t count, off_t offset) {
+  off_t orig_offset = lseek(fd, 0, SEEK_CUR);
+  if (orig_offset == (off_t)-1)
+    return -1;
+  if (lseek(fd, offset, SEEK_CUR) == (off_t)-1)
+    return -1;
+  ssize_t len = write(fd, buf, count);
+  if (len < 0)
+    return len;
+  if (lseek(fd, orig_offset, SEEK_SET) == (off_t)-1)
+    return -1;
+  return len;
+}
+#endif  // !HAVE_PWRITE
+
 static void GetHostName(string* hostname) {
 #if defined(HAVE_SYS_UTSNAME_H)
   struct utsname buf;
@@ -216,6 +253,7 @@ static bool TerminalSupportsColor() {
       !strcmp(term, "xterm") ||
       !strcmp(term, "xterm-color") ||
       !strcmp(term, "xterm-256color") ||
+      !strcmp(term, "screen-256color") ||
       !strcmp(term, "screen") ||
       !strcmp(term, "linux") ||
       !strcmp(term, "cygwin");
@@ -286,14 +324,17 @@ static int32 MaxLogSize() {
   return (FLAGS_max_log_size > 0 ? FLAGS_max_log_size : 1);
 }
 
+// An arbitrary limit on the length of a single log message.  This
+// is so that streaming can be done more efficiently.
+const size_t LogMessage::kMaxLogMessageLen = 30000;
+
 struct LogMessage::LogMessageData  {
-  LogMessageData() {};
+  LogMessageData();
 
   int preserved_errno_;      // preserved errno
-  char* buf_;                   // buffer space for non FATAL messages
-  char* message_text_;  // Complete message text (points to selected buffer)
-  LogStream* stream_alloc_;
-  LogStream* stream_;
+  // Buffer space; contains complete message text.
+  char message_text_[LogMessage::kMaxLogMessageLen+1];
+  LogStream stream_;
   char severity_;      // What level is this LogMessage logged at?
   int line_;                 // line number where logging call is.
   void (LogMessage::*send_method_)();  // Call this in destructor to send
@@ -311,8 +352,6 @@ struct LogMessage::LogMessageData  {
   const char* fullname_;        // fullname of file that called LOG
   bool has_been_flushed_;       // false => data has not been flushed
   bool first_fatal_;            // true => this was first fatal msg
-
-  ~LogMessageData();
 
  private:
   LogMessageData(const LogMessageData&);
@@ -887,8 +926,10 @@ bool LogFileObject::CreateLogfile(const string& time_pid_string) {
     linkpath += linkname;
     unlink(linkpath.c_str());                    // delete old one if it exists
 
+#if defined(OS_WINDOWS)
+    // TODO(hamaji): Create lnk file on Windows?
+#elif defined(HAVE_UNISTD_H)
     // We must have unistd.h.
-#ifdef HAVE_UNISTD_H
     // Make the symlink be relative (in the same dir) so that if the
     // entire log directory gets relocated the link is still valid.
     const char *linkdest = slash ? (slash + 1) : filename;
@@ -1079,9 +1120,6 @@ void LogFileObject::Write(bool force_flush,
 
 }  // namespace
 
-// An arbitrary limit on the length of a single log message.  This
-// is so that streaming can be done more efficiently.
-const size_t LogMessage::kMaxLogMessageLen = 30000;
 
 // Static log data space to avoid alloc failures in a LOG(FATAL)
 //
@@ -1092,25 +1130,18 @@ const size_t LogMessage::kMaxLogMessageLen = 30000;
 static Mutex fatal_msg_lock;
 static CrashReason crash_reason;
 static bool fatal_msg_exclusive = true;
-static char fatal_msg_buf_exclusive[LogMessage::kMaxLogMessageLen+1];
-static char fatal_msg_buf_shared[LogMessage::kMaxLogMessageLen+1];
-static LogMessage::LogStream fatal_msg_stream_exclusive(
-    fatal_msg_buf_exclusive, LogMessage::kMaxLogMessageLen, 0);
-static LogMessage::LogStream fatal_msg_stream_shared(
-    fatal_msg_buf_shared, LogMessage::kMaxLogMessageLen, 0);
 static LogMessage::LogMessageData fatal_msg_data_exclusive;
 static LogMessage::LogMessageData fatal_msg_data_shared;
 
-LogMessage::LogMessageData::~LogMessageData() {
-  delete[] buf_;
-  delete stream_alloc_;
+LogMessage::LogMessageData::LogMessageData()
+  : stream_(message_text_, LogMessage::kMaxLogMessageLen, 0) {
 }
 
 LogMessage::LogMessage(const char* file, int line, LogSeverity severity,
                        int ctr, void (LogMessage::*send_method)())
     : allocated_(NULL) {
   Init(file, line, severity, send_method);
-  data_->stream_->set_ctr(ctr);
+  data_->stream_.set_ctr(ctr);
 }
 
 LogMessage::LogMessage(const char* file, int line,
@@ -1160,27 +1191,17 @@ void LogMessage::Init(const char* file,
   if (severity != GLOG_FATAL || !exit_on_dfatal) {
     allocated_ = new LogMessageData();
     data_ = allocated_;
-    data_->buf_ = new char[kMaxLogMessageLen+1];
-    data_->message_text_ = data_->buf_;
-    data_->stream_alloc_ =
-        new LogStream(data_->message_text_, kMaxLogMessageLen, 0);
-    data_->stream_ = data_->stream_alloc_;
     data_->first_fatal_ = false;
   } else {
     MutexLock l(&fatal_msg_lock);
     if (fatal_msg_exclusive) {
       fatal_msg_exclusive = false;
       data_ = &fatal_msg_data_exclusive;
-      data_->message_text_ = fatal_msg_buf_exclusive;
-      data_->stream_ = &fatal_msg_stream_exclusive;
       data_->first_fatal_ = true;
     } else {
       data_ = &fatal_msg_data_shared;
-      data_->message_text_ = fatal_msg_buf_shared;
-      data_->stream_ = &fatal_msg_stream_shared;
       data_->first_fatal_ = false;
     }
-    data_->stream_alloc_ = NULL;
   }
 
   stream().fill('0');
@@ -1221,7 +1242,7 @@ void LogMessage::Init(const char* file,
              << ' '
              << data_->basename_ << ':' << data_->line_ << "] ";
   }
-  data_->num_prefix_chars_ = data_->stream_->pcount();
+  data_->num_prefix_chars_ = data_->stream_.pcount();
 
   if (!FLAGS_log_backtrace_at.empty()) {
     char fileline[128];
@@ -1246,7 +1267,7 @@ int LogMessage::preserved_errno() const {
 }
 
 ostream& LogMessage::stream() {
-  return *(data_->stream_);
+  return data_->stream_;
 }
 
 // Flush buffered message, called by the destructor, or any other function
@@ -1255,7 +1276,7 @@ void LogMessage::Flush() {
   if (data_->has_been_flushed_ || data_->severity_ < FLAGS_minloglevel)
     return;
 
-  data_->num_chars_to_log_ = data_->stream_->pcount();
+  data_->num_chars_to_log_ = data_->stream_.pcount();
   data_->num_chars_to_syslog_ =
     data_->num_chars_to_log_ - data_->num_prefix_chars_;
 
@@ -1305,7 +1326,7 @@ void LogMessage::Flush() {
 
 // Copy of first FATAL log message so that we can print it out again
 // after all the stack traces.  To preserve legacy behavior, we don't
-// use fatal_msg_buf_exclusive.
+// use fatal_msg_data_exclusive.
 static time_t fatal_time;
 static char fatal_message[256];
 
@@ -1417,7 +1438,7 @@ void LogMessage::RecordCrashReason(
     glog_internal_namespace_::CrashReason* reason) {
   reason->filename = fatal_msg_data_exclusive.fullname_;
   reason->line_number = fatal_msg_data_exclusive.line_;
-  reason->message = fatal_msg_buf_exclusive +
+  reason->message = fatal_msg_data_exclusive.message_text_ +
                     fatal_msg_data_exclusive.num_prefix_chars_;
 #ifdef HAVE_STACKTRACE
   // Retrieve the stack trace, omitting the logging frames that got us here.
@@ -1439,7 +1460,7 @@ static void logging_fail() {
 #if defined(_DEBUG) && defined(_MSC_VER)
   // When debugging on windows, avoid the obnoxious dialog and make
   // it possible to continue past a LOG(FATAL) in the debugger
-  _asm int 3
+  __debugbreak();
 #else
   abort();
 #endif
@@ -1565,9 +1586,8 @@ ErrnoLogMessage::ErrnoLogMessage(const char* file, int line,
 ErrnoLogMessage::~ErrnoLogMessage() {
   // Don't access errno directly because it may have been altered
   // while streaming the message.
-  char buf[100];
-  posix_strerror_r(preserved_errno(), buf, sizeof(buf));
-  stream() << ": " << buf << " [" << preserved_errno() << "]";
+  stream() << ": " << StrError(preserved_errno()) << " ["
+           << preserved_errno() << "]";
 }
 
 void FlushLogFiles(LogSeverity min_severity) {
@@ -1696,13 +1716,11 @@ static bool SendEmailInternal(const char*dest, const char *subject,
       bool ok = pclose(pipe) != -1;
       if ( !ok ) {
         if ( use_logging ) {
-          char buf[100];
-          posix_strerror_r(errno, buf, sizeof(buf));
-          LOG(ERROR) << "Problems sending mail to " << dest << ": " << buf;
+          LOG(ERROR) << "Problems sending mail to " << dest << ": "
+                     << StrError(errno);
         } else {
-          char buf[100];
-          posix_strerror_r(errno, buf, sizeof(buf));
-          fprintf(stderr, "Problems sending mail to %s: %s\n", dest, buf);
+          fprintf(stderr, "Problems sending mail to %s: %s\n",
+                  dest, StrError(errno).c_str());
         }
       }
       return ok;
@@ -1824,8 +1842,11 @@ void TruncateLogFile(const char *path, int64 limit, int64 keep) {
   int64 read_offset, write_offset;
   // Don't follow symlinks unless they're our own fd symlinks in /proc
   int flags = O_RDWR;
+  // TODO(hamaji): Support other environments.
+#ifdef OS_LINUX
   const char *procfd_prefix = "/proc/self/fd/";
   if (strncmp(procfd_prefix, path, strlen(procfd_prefix))) flags |= O_NOFOLLOW;
+#endif
 
   int fd = open(path, flags);
   if (fd == -1) {
@@ -1971,6 +1992,15 @@ int posix_strerror_r(int err, char *buf, size_t len) {
       return 0;
     }
   }
+}
+
+string StrError(int err) {
+  char buf[100];
+  int rc = posix_strerror_r(err, buf, sizeof(buf));
+  if ((rc < 0) || (buf[0] == '\000')) {
+    snprintf(buf, sizeof(buf), "Error number %d", err);
+  }
+  return buf;
 }
 
 LogMessageFatal::LogMessageFatal(const char* file, int line) :

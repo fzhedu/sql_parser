@@ -1,6 +1,5 @@
-AC_INIT([cpp_parser], [0.1], [fzhedu@gmail.com])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_PROG_CC_C_O
+AC_INIT([sql_parser], [0.1], [fzhedu@gmail.com])
+AM_INIT_AUTOMAKE([-Wall foreign])
 AC_PROG_LIBTOOL
 AC_PROG_GREP
 AC_PROG_NM
