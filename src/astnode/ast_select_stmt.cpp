@@ -8,9 +8,13 @@
  */
 
 #include "./ast_select_stmt.h"
-#include <iostream>
+#include <iostream>  // NOLINT
 #include <iomanip>
-using namespace std;
+#include <string>
+using std::endl;
+using std::cout;
+using std::setw;
+using std::string;
 
 AstSelectList::AstSelectList(AstNodeType ast_node_type, bool is_all,
                              AstNode* args, AstNode* next)
@@ -34,7 +38,7 @@ void AstSelectList::Print(int level) const {
         cout << setw(level * 8) << " " << "|column| : *(ALL) " << endl;
     }
     if (next_ != NULL) {
-        next_->Print(level + 1);
+        next_->Print(level);
     }
 }
 

@@ -437,7 +437,7 @@ stmt_list: stmt ';'
 	}		
   	| error ';'			
   	{ 
-		printf("> \n");
+		printf("> There must be something wrong!\n");
 		result->ast  = NULL;	
 		result->error_number++;	
 		//yyerror(result,"First statement discarded, input new statement"); 

@@ -287,6 +287,7 @@ AstExprList::~AstExprList() {
 }
 
 void AstExprList::Print(int level) const {
+    // cout << "level= " << level << endl;
     cout << setw(level * 8) << " " << "|expr list|" << endl;
     if (expr_ != NULL)
         expr_->Print(level);
