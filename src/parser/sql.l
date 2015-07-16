@@ -318,7 +318,7 @@ B'[01]+'     { yylval->strval = strdup(yytext); return STRING; }
 ">"	{ yylval->subtok = 2; return COMPARISON; }
 "!="	|
 "<>"	{ yylval->subtok = 3; return COMPARISON; }
-"="	{ yylval->subtok = 4; return COMPARISON; }
+"="	    { yylval->subtok = 4; return COMPARISON; }
 "<="	{ yylval->subtok = 5; return COMPARISON; }
 ">="	{ yylval->subtok = 6; return COMPARISON; }
 "<=>"	{ yylval->subtok = 12; return COMPARISON; }

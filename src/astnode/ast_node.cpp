@@ -13,36 +13,39 @@
 
 using namespace std;
 
-AstNode::AstNode(AstNodeType ast_node_type) :
-		ast_node_type_(ast_node_type) {
+AstNode::AstNode(AstNodeType ast_node_type)
+        : ast_node_type_(ast_node_type) {
 
 }
 
 AstNode::~AstNode() {
 }
 void AstNode::Print(int level) const {
-	cout << setw(level * 8) << " " << "This is an AST_NODE!" << endl;
+    cout << setw(level * 8) << " " << "This is an AST_NODE!" << endl;
 }
 
 AstNodeType AstNode::ast_node_type() {
-	return ast_node_type_;
+    return ast_node_type_;
 }
 
-AstStmtList::AstStmtList(AstNodeType ast_node_type, AstNode* stmt, AstNode* next) :
-		AstNode(ast_node_type), stmt_(stmt), next_(next) {
+AstStmtList::AstStmtList(AstNodeType ast_node_type, AstNode* stmt,
+                         AstNode* next)
+        : AstNode(ast_node_type),
+          stmt_(stmt),
+          next_(next) {
 }
 
 AstStmtList::~AstStmtList() {
-	delete stmt_;
-	delete next_;
+    delete stmt_;
+    delete next_;
 }
 
 void AstStmtList::Print(int level) const {
-	cout << setw(level * 8) << " " << "|stmt list|" << endl;
-	if (stmt_ != NULL) {
-		stmt_->Print(level);
-	}
-	if (next_ != NULL) {
-		next_->Print(level++);
-	}
+    cout << setw(level * 8) << " " << "|stmt list|" << endl;
+    if (stmt_ != NULL) {
+        stmt_->Print(level);
+    }
+    if (next_ != NULL) {
+        next_->Print(level++);
+    }
 }
