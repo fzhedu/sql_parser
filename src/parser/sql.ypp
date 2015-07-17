@@ -409,7 +409,6 @@ should replace YYLEX with the following clause in sql.tab.cpp, why so? I don't k
 stmt_list: stmt ';'		
 	{ 	
 		printf("> \n"); 
-		//$$ = newStmt(t_stmt, NULL, $1,result->node_pointer); 
 		$$=new AstStmtList(AST_STMT_LIST,$1,NULL);
 		if (result->error_number == 0) 
 		{
@@ -424,7 +423,6 @@ stmt_list: stmt ';'
 	| stmt_list stmt ';'	
 	{ 	
 		printf(">> \n"); 
-		//$$ = newStmt(t_stmt, $1, $2,result->node_pointer); 
 		$$=new AstStmtList(AST_STMT_LIST,$2,$1);
 		if (result->error_number == 0)
 		{
@@ -437,7 +435,7 @@ stmt_list: stmt ';'
 	}		
   	| error ';'			
   	{ 
-		printf("> There must be something wrong!\n");
+		printf(">> \n");
 		result->ast  = NULL;	
 		result->error_number++;	
 		//yyerror(result,"First statement discarded, input new statement"); 
@@ -447,12 +445,11 @@ stmt_list: stmt ';'
   	| stmt_list error ';'	
   	{ 
 		printf(">> \n"); 
-		result->ast  = NULL;	// 2014-3-6---if error, the last root is set be null---byYU
-		result->error_number++;		// 2014-3-6---error number add by 1---byYU
-		//yyerror(result,"Current statement discarded, input new statement"); 
+		result->ast  = NULL;	
+		result->error_number++;		
 		yyclearin;
 		yyerrok; 
-	}	// 2014-3-4---add support error---byYU
+	}	
   	;
 
    /* statements: select statement */

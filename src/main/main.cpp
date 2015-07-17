@@ -19,7 +19,8 @@ int main(int argc, char* argv[]) {
     int flag = 1;
     while (flag) {
         Parser* my_parser = new Parser();
-        my_parser->GetRawAST()->Print();
+        if (my_parser->GetRawAST() != NULL )
+          my_parser->GetRawAST()->Print();
         delete my_parser;
         printf("continue 1 or not 0!\n");
         scanf("%d", &flag);

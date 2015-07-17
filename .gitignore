@@ -22,14 +22,9 @@ Default
 /doc
 .gitignore.swp
 .history
-<<<<<<< HEAD
-<<<<<<< HEAD
 ar-lib
 lex.yy.c
 config.h.in~
-=======
->>>>>>> refs/remotes/origin/fzh0629
-=======
 /include/
 install/
 /install-sh
@@ -46,5 +41,5 @@ src/main/parser
 stamp-h1
 .svn/*
 test/main/parser_test
-/thirdparty/
->>>>>>> refs/remotes/origin/master_fzh_0714
+thirdparty/
+.cproject
