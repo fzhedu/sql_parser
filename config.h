@@ -36,19 +36,19 @@
 #define LT_OBJDIR ".libs/"
 
 /* Name of package */
-#define PACKAGE "cpp_parser"
+#define PACKAGE "sql_parser"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "fzhedu@gmail.com"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "cpp_parser"
+#define PACKAGE_NAME "sql_parser"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "cpp_parser 0.1"
+#define PACKAGE_STRING "sql_parser 0.1"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "cpp_parser"
+#define PACKAGE_TARNAME "sql_parser"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL ""

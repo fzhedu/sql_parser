@@ -393,24 +393,24 @@ static const short int yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const unsigned short int yyrline[] =
 {
-       0,   409,   409,   423,   436,   445,   457,   461,   466,   474,
-     475,   478,   479,   484,   488,   493,   494,   495,   498,   499,
-     502,   503,   509,   510,   516,   520,   525,   526,   527,   530,
-     531,   535,   536,   539,   540,   541,   542,   543,   544,   545,
-     546,   547,   551,   552,   553,   554,   558,   561,   562,   566,
-     567,   571,   575,   579,   583,   586,   587,   590,   591,   592,
-     606,   608,   610,   612,   614,   618,   619,   620,   623,   624,
-     628,   629,   633,   634,   635,   638,   639,   647,   651,   659,
-     666,   667,   668,   669,   670,   671,   672,   673,   675,   676,
-     677,   678,   679,   680,   682,   683,   685,   686,   687,   689,
-     690,   691,   692,   693,   694,   695,   696,   697,   698,   699,
-     700,   701,   704,   705,   706,   707,   710,   714,   715,   716,
-     719,   720,   723,   724,   725,   726,   727,   728,   729,   730,
-     731,   732,   742,   743,   744,   745,   746,   747,   751,   752,
-     753,   754,   755,   756,   757,   758,   759,   762,   763,   764,
-     767,   768,   769,   770,   771,   772,   775,   776,   780,   781,
-     782,   783,   784,   785,   786,   787,   788,   792,   793,   794,
-     795,   798,   799,   802,   803,   806,   807
+       0,   409,   409,   423,   436,   445,   457,   461,   465,   472,
+     473,   476,   477,   482,   483,   485,   486,   487,   490,   491,
+     494,   495,   498,   499,   502,   503,   505,   506,   507,   510,
+     511,   515,   516,   519,   520,   521,   522,   523,   524,   525,
+     526,   527,   531,   532,   533,   534,   538,   541,   542,   546,
+     547,   551,   553,   555,   556,   559,   560,   563,   564,   565,
+     579,   580,   581,   582,   583,   586,   587,   588,   591,   592,
+     596,   597,   601,   602,   603,   606,   607,   615,   616,   621,
+     628,   629,   630,   631,   632,   633,   634,   635,   637,   638,
+     639,   640,   641,   642,   644,   645,   647,   648,   649,   651,
+     652,   653,   654,   655,   657,   658,   659,   660,   662,   663,
+     664,   665,   668,   669,   670,   671,   674,   677,   678,   679,
+     682,   683,   686,   687,   688,   689,   690,   691,   692,   693,
+     695,   696,   706,   707,   708,   709,   710,   711,   715,   716,
+     717,   718,   719,   720,   721,   722,   723,   726,   727,   728,
+     731,   732,   733,   734,   735,   736,   739,   740,   744,   745,
+     746,   747,   748,   749,   750,   751,   752,   756,   757,   758,
+     759,   762,   763,   766,   767,   770,   771
 };
 #endif
 
@@ -481,7 +481,7 @@ static const char *const yytname[] =
   "opt_as", "opt_as_alias", "join_table", "opt_inner_cross", "opt_outer",
   "left_or_right", "opt_left_or_right_outer", "opt_join_condition",
   "join_condition", "table_subquery", "expr", "expr_list", "opt_expr_list",
-  "trim_ltb", "date_type", "interval_exp", "case_list", YY_NULL
+  "trim_ltb", "cast_data_type", "interval_exp", "case_list", YY_NULL
 };
 #endif
 
@@ -1799,1048 +1799,1024 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
   case 6:
 /* Line 868 of glr.c  */
 #line 457 "sql.ypp"
-    { ((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node);}
+    { ((*yyvalp).ast_node) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node);}
     break;
 
   case 7:
 /* Line 868 of glr.c  */
 #line 462 "sql.ypp"
     {
-		//$$ = newQueryStmt(t_query_stmt, 0, $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL,result->node_pointer);
-		((*yyvalp).ast_node)=new AstSelectStmt(AST_SELECT_STMT,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.intval),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node),NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+		((*yyvalp).ast_node)=new AstSelectStmt((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.intval),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node),NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 	}
     break;
 
   case 8:
 /* Line 868 of glr.c  */
-#line 468 "sql.ypp"
+#line 467 "sql.ypp"
     {
-		//$$ = newQueryStmt(t_query_stmt, 0, $2, $3, $5, $6, $7, $8, $9, $10, $11,result->node_pointer);
-		((*yyvalp).ast_node)=new AstSelectStmt(AST_SELECT_STMT,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (11))].yystate.yysemantics.yysval.intval),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((8) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((9) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((10) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((11) - (11))].yystate.yysemantics.yysval.ast_node));
+		((*yyvalp).ast_node)=new AstSelectStmt((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (11))].yystate.yysemantics.yysval.intval),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((8) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((9) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((10) - (11))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((11) - (11))].yystate.yysemantics.yysval.ast_node));
 	}
     break;
 
   case 9:
 /* Line 868 of glr.c  */
-#line 474 "sql.ypp"
-    { ((*yyvalp).ast_node)= NULL;}
+#line 472 "sql.ypp"
+    { ((*yyvalp).ast_node) = NULL;}
     break;
 
   case 10:
 /* Line 868 of glr.c  */
-#line 475 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstWhereClause(AST_WHERE_CLAUSE,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));}
+#line 473 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstWhereClause((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 11:
 /* Line 868 of glr.c  */
-#line 478 "sql.ypp"
-    { ((*yyvalp).ast_node)=NULL;}
+#line 476 "sql.ypp"
+    { ((*yyvalp).ast_node) = NULL;}
     break;
 
   case 12:
 /* Line 868 of glr.c  */
-#line 479 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstGroupByClause(AST_GROUPBY_CLAUSE,(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.intval));}
+#line 477 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstGroupByClause((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.intval));}
     break;
 
   case 13:
 /* Line 868 of glr.c  */
-#line 485 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstGroupByList(AST_GROUPBY_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node),NULL);
-	}
+#line 482 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstGroupByList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 14:
 /* Line 868 of glr.c  */
-#line 489 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstGroupByList(AST_GROUPBY_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));
-	}
+#line 483 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstGroupByList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 15:
 /* Line 868 of glr.c  */
-#line 493 "sql.ypp"
+#line 485 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 16:
 /* Line 868 of glr.c  */
-#line 494 "sql.ypp"
+#line 486 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 17:
 /* Line 868 of glr.c  */
-#line 495 "sql.ypp"
+#line 487 "sql.ypp"
     { ((*yyvalp).intval) = 1; }
     break;
 
   case 18:
 /* Line 868 of glr.c  */
-#line 498 "sql.ypp"
+#line 490 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 19:
 /* Line 868 of glr.c  */
-#line 499 "sql.ypp"
+#line 491 "sql.ypp"
     { ((*yyvalp).intval) = 1; }
     break;
 
   case 20:
 /* Line 868 of glr.c  */
-#line 502 "sql.ypp"
+#line 494 "sql.ypp"
     { ((*yyvalp).ast_node)=NULL; }
     break;
 
   case 21:
 /* Line 868 of glr.c  */
-#line 504 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstHavingClause(AST_HAVING_CLAUSE,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));
-	}
+#line 495 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstHavingClause((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));	}
     break;
 
   case 22:
 /* Line 868 of glr.c  */
-#line 509 "sql.ypp"
+#line 498 "sql.ypp"
     { ((*yyvalp).ast_node)=NULL; }
     break;
 
   case 23:
 /* Line 868 of glr.c  */
-#line 511 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstOrderByClause(AST_ORDERBY_CLAUSE,(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));
-	}
+#line 499 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstOrderByClause((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 24:
 /* Line 868 of glr.c  */
-#line 517 "sql.ypp"
-    { 
-		((*yyvalp).ast_node)=new AstOrderByList(AST_ORDERBY_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.intval),NULL);
-	}
+#line 502 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstOrderByList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.intval), NULL);}
     break;
 
   case 25:
 /* Line 868 of glr.c  */
-#line 521 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstOrderByList(AST_ORDERBY_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.intval),(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node));
-	}
+#line 503 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstOrderByList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 26:
 /* Line 868 of glr.c  */
-#line 525 "sql.ypp"
+#line 505 "sql.ypp"
     { ((*yyvalp).ast_node) = NULL; }
     break;
 
   case 27:
 /* Line 868 of glr.c  */
-#line 526 "sql.ypp"
-    { ((*yyvalp).ast_node)=new AstLimitClause(AST_LIMIT_CLAUSE,NULL,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));}
+#line 506 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstLimitClause(NULL,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 28:
 /* Line 868 of glr.c  */
-#line 527 "sql.ypp"
-    { ((*yyvalp).ast_node)=new AstLimitClause(AST_LIMIT_CLAUSE,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node));}
+#line 507 "sql.ypp"
+    { ((*yyvalp).ast_node)=new AstLimitClause((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 29:
 /* Line 868 of glr.c  */
-#line 530 "sql.ypp"
+#line 510 "sql.ypp"
     { ((*yyvalp).ast_node)=NULL; }
     break;
 
   case 30:
 /* Line 868 of glr.c  */
-#line 531 "sql.ypp"
+#line 511 "sql.ypp"
     { ((*yyvalp).ast_node)=NULL;}
     break;
 
   case 31:
 /* Line 868 of glr.c  */
-#line 535 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN, string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval)));}
+#line 515 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstColumn(string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval)));}
     break;
 
   case 32:
 /* Line 868 of glr.c  */
-#line 536 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN, string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
+#line 516 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstColumn(string("NULL"), string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 33:
 /* Line 868 of glr.c  */
-#line 539 "sql.ypp"
+#line 519 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 34:
 /* Line 868 of glr.c  */
-#line 540 "sql.ypp"
+#line 520 "sql.ypp"
     { if(((*yyvalp).intval) & 1) yyerror(result,"duplicate ALL option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 1; }
     break;
 
   case 35:
 /* Line 868 of glr.c  */
-#line 541 "sql.ypp"
+#line 521 "sql.ypp"
     { if(((*yyvalp).intval) & 2) yyerror(result,"duplicate DISTINCT option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 2; }
     break;
 
   case 36:
 /* Line 868 of glr.c  */
-#line 542 "sql.ypp"
+#line 522 "sql.ypp"
     { if(((*yyvalp).intval) & 4) yyerror(result,"duplicate DISTINCTROW option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 4; }
     break;
 
   case 37:
 /* Line 868 of glr.c  */
-#line 543 "sql.ypp"
+#line 523 "sql.ypp"
     { if(((*yyvalp).intval) & 8) yyerror(result,"duplicate HIGH_PRIORITY option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 8; }
     break;
 
   case 38:
 /* Line 868 of glr.c  */
-#line 544 "sql.ypp"
+#line 524 "sql.ypp"
     { if(((*yyvalp).intval) & 16) yyerror(result,"duplicate STRAIGHT_JOIN option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 16; }
     break;
 
   case 39:
 /* Line 868 of glr.c  */
-#line 545 "sql.ypp"
+#line 525 "sql.ypp"
     { if(((*yyvalp).intval) & 32) yyerror(result,"duplicate SQL_SMALL_RESULT option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 32; }
     break;
 
   case 40:
 /* Line 868 of glr.c  */
-#line 546 "sql.ypp"
+#line 526 "sql.ypp"
     { if(((*yyvalp).intval) & 64) yyerror(result,"duplicate SQL_BIG_RESULT option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 64; }
     break;
 
   case 41:
 /* Line 868 of glr.c  */
-#line 547 "sql.ypp"
+#line 527 "sql.ypp"
     { if(((*yyvalp).intval) & 128) yyerror(result,"duplicate SQL_CALC_FOUND_ROWS option"); ((*yyvalp).intval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.intval) | 128; }
     break;
 
   case 42:
 /* Line 868 of glr.c  */
-#line 551 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstSelectList(AST_SELECT_LIST,0,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node),NULL);}
+#line 531 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstSelectList(0,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node),NULL);}
     break;
 
   case 43:
 /* Line 868 of glr.c  */
-#line 552 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstSelectList(AST_SELECT_LIST,0,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
+#line 532 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstSelectList(0,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 44:
 /* Line 868 of glr.c  */
-#line 553 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstSelectList(AST_SELECT_LIST,1,NULL,NULL);}
+#line 533 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstSelectList(1,NULL,NULL);}
     break;
 
   case 45:
 /* Line 868 of glr.c  */
-#line 554 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstSelectList(AST_SELECT_LIST,1,NULL,(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 534 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstSelectList(1,NULL,(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 46:
 /* Line 868 of glr.c  */
-#line 558 "sql.ypp"
-    {((*yyvalp).ast_node) = new AstSelectExpr(AST_SELECT_EXPR,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval)),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.ast_node));}
+#line 538 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstSelectExpr(string((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval)),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 47:
 /* Line 868 of glr.c  */
-#line 561 "sql.ypp"
-    { ((*yyvalp).ast_node)=new AstFromList(AST_FROM_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node),NULL); }
+#line 541 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstFromList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node),NULL); }
     break;
 
   case 48:
 /* Line 868 of glr.c  */
-#line 562 "sql.ypp"
-    { ((*yyvalp).ast_node)=new AstFromList(AST_FROM_LIST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
+#line 542 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstFromList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 49:
 /* Line 868 of glr.c  */
-#line 566 "sql.ypp"
+#line 546 "sql.ypp"
     { ((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 50:
 /* Line 868 of glr.c  */
-#line 567 "sql.ypp"
+#line 547 "sql.ypp"
     { ((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 51:
 /* Line 868 of glr.c  */
-#line 572 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstTable(AST_TABLE,string("NULL"),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval)));
-	}
+#line 552 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstTable(string("NULL"),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (2))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval)));}
     break;
 
   case 52:
 /* Line 868 of glr.c  */
-#line 576 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstTable(AST_TABLE,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.strval)));
-   	}
+#line 554 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstTable(string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 53:
 /* Line 868 of glr.c  */
-#line 580 "sql.ypp"
-    {
-		((*yyvalp).ast_node)=new AstSubquery(AST_SUBQUERY,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.strval)),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node));
-	}
+#line 555 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstSubquery(string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.strval)),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 54:
 /* Line 868 of glr.c  */
-#line 583 "sql.ypp"
-    { ((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node); }
+#line 556 "sql.ypp"
+    { ((*yyvalp).ast_node) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 57:
 /* Line 868 of glr.c  */
-#line 590 "sql.ypp"
-    { ((*yyvalp).strval)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval); }
+#line 563 "sql.ypp"
+    { ((*yyvalp).strval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.strval); }
     break;
 
   case 58:
 /* Line 868 of glr.c  */
-#line 591 "sql.ypp"
-    { ((*yyvalp).strval)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval); }
+#line 564 "sql.ypp"
+    { ((*yyvalp).strval) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval); }
     break;
 
   case 59:
 /* Line 868 of glr.c  */
-#line 592 "sql.ypp"
-    { ((*yyvalp).strval)="NULL"; }
+#line 565 "sql.ypp"
+    { ((*yyvalp).strval) = "NULL"; }
     break;
 
   case 60:
 /* Line 868 of glr.c  */
-#line 607 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprJoin(AST_INNER_CROSS_JOIN, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node)) ;}
+#line 579 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstJoin((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 61:
 /* Line 868 of glr.c  */
-#line 609 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprJoin(AST_STRAIGHT_JOIN, -1, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node), NULL);}
+#line 580 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstJoin(-1, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node), NULL);}
     break;
 
   case 62:
 /* Line 868 of glr.c  */
-#line 611 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprJoin(AST_STRAIGHT_JOIN_ON, -1, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node));}
+#line 581 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstJoin(-1, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 63:
 /* Line 868 of glr.c  */
-#line 613 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprJoin(AST_LEFT_RIGHT_JOIN_CONDITION, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.intval)+(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (6))].yystate.yysemantics.yysval.ast_node));}
+#line 582 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstJoin((((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.intval) + (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (6))].yystate.yysemantics.yysval.ast_node));}
     break;
 
   case 64:
 /* Line 868 of glr.c  */
-#line 615 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprJoin(AST_NATURAL_LR_JOIN, 32 + (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node), NULL);}
+#line 583 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstJoin(32 + (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.intval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node), NULL);}
     break;
 
   case 65:
 /* Line 868 of glr.c  */
-#line 618 "sql.ypp"
+#line 586 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 66:
 /* Line 868 of glr.c  */
-#line 619 "sql.ypp"
+#line 587 "sql.ypp"
     { ((*yyvalp).intval) = 1; }
     break;
 
   case 67:
 /* Line 868 of glr.c  */
-#line 620 "sql.ypp"
+#line 588 "sql.ypp"
     { ((*yyvalp).intval) = 2; }
     break;
 
   case 68:
 /* Line 868 of glr.c  */
-#line 623 "sql.ypp"
+#line 591 "sql.ypp"
     { ((*yyvalp).intval) = 4; }
     break;
 
   case 69:
 /* Line 868 of glr.c  */
-#line 624 "sql.ypp"
+#line 592 "sql.ypp"
     { ((*yyvalp).intval) = 4; }
     break;
 
   case 70:
 /* Line 868 of glr.c  */
-#line 628 "sql.ypp"
+#line 596 "sql.ypp"
     { ((*yyvalp).intval) = 8; }
     break;
 
   case 71:
 /* Line 868 of glr.c  */
-#line 629 "sql.ypp"
+#line 597 "sql.ypp"
     { ((*yyvalp).intval) = 16; }
     break;
 
   case 72:
 /* Line 868 of glr.c  */
-#line 633 "sql.ypp"
+#line 601 "sql.ypp"
     { ((*yyvalp).intval) = 8 + (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.intval); }
     break;
 
   case 73:
 /* Line 868 of glr.c  */
-#line 634 "sql.ypp"
+#line 602 "sql.ypp"
     { ((*yyvalp).intval) = 16 + (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.intval); }
     break;
 
   case 74:
 /* Line 868 of glr.c  */
-#line 635 "sql.ypp"
+#line 603 "sql.ypp"
     { ((*yyvalp).intval) = 0; }
     break;
 
   case 75:
 /* Line 868 of glr.c  */
-#line 638 "sql.ypp"
-    {((*yyvalp).ast_node)=NULL;}
+#line 606 "sql.ypp"
+    {((*yyvalp).ast_node) = NULL;}
     break;
 
   case 76:
 /* Line 868 of glr.c  */
-#line 639 "sql.ypp"
-    {((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node);}
+#line 607 "sql.ypp"
+    {((*yyvalp).ast_node) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node);}
     break;
 
   case 77:
 /* Line 868 of glr.c  */
-#line 648 "sql.ypp"
-    {
-    	((*yyvalp).ast_node) = new AstExprUnary(AST_CONDITION_ON_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node));
-    }
+#line 615 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstJoinCondition("ON", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 78:
 /* Line 868 of glr.c  */
-#line 652 "sql.ypp"
-    {
-    	((*yyvalp).ast_node) = new AstExprUnary(AST_CONDITION_USING_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node));
-    }
+#line 616 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstJoinCondition("USING", (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 79:
 /* Line 868 of glr.c  */
-#line 659 "sql.ypp"
+#line 621 "sql.ypp"
     { ((*yyvalp).ast_node)=(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 80:
 /* Line 868 of glr.c  */
-#line 666 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN,string("NULL"),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval)));}
+#line 628 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstColumn(string("NULL"),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval)));}
     break;
 
   case 81:
 /* Line 868 of glr.c  */
-#line 667 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprConst(AST_EXPR_CONST,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
+#line 629 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprConst("CONST",string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 82:
 /* Line 868 of glr.c  */
-#line 668 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.strval))); }
+#line 630 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstColumn(string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)),string((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 83:
 /* Line 868 of glr.c  */
-#line 669 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstColumn(AST_COLUMN,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)),string("*"));}
+#line 631 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstColumn(string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.strval)),string("*"));}
     break;
 
   case 84:
 /* Line 868 of glr.c  */
-#line 670 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprConst(AST_EXPR_CONST_STRING,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
+#line 632 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprConst("CONST_STRING",	string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 85:
 /* Line 868 of glr.c  */
-#line 671 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprConst(AST_EXPR_CONST_INT,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
+#line 633 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprConst("CONST_INT",		string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 86:
 /* Line 868 of glr.c  */
-#line 672 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprConst(AST_EXPR_CONST_DOUBLE,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
+#line 634 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprConst("CONST_DOUBLE",	string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 87:
 /* Line 868 of glr.c  */
-#line 673 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprConst(AST_EXPR_CONST_BOOL,string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
+#line 635 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprConst("CONST_BOOL",	string((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.strval))); }
     break;
 
   case 88:
 /* Line 868 of glr.c  */
-#line 675 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_ADD, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 637 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("+",   (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 89:
 /* Line 868 of glr.c  */
-#line 676 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_SUB, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 638 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("-",   (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 90:
 /* Line 868 of glr.c  */
-#line 677 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_MUL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 639 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("*",   (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 91:
 /* Line 868 of glr.c  */
-#line 678 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_DIV, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 640 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("/",   (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 92:
 /* Line 868 of glr.c  */
-#line 679 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_MOD, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 641 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("MOD", (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 93:
 /* Line 868 of glr.c  */
-#line 680 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_MOD_SIGN, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 642 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("%",   (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 94:
 /* Line 868 of glr.c  */
-#line 682 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_NEGATIVE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
+#line 644 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("-", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 95:
 /* Line 868 of glr.c  */
-#line 683 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_POSITIVE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
+#line 645 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("+", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 96:
 /* Line 868 of glr.c  */
-#line 685 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_AND, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 647 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("AND", (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 97:
 /* Line 868 of glr.c  */
-#line 686 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_OR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 648 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("OR",  (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 98:
 /* Line 868 of glr.c  */
-#line 687 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_XOR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 649 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("XOR", (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 99:
 /* Line 868 of glr.c  */
-#line 689 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AstExprCmpBinary::CMP_NULL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 651 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 100:
 /* Line 868 of glr.c  */
-#line 690 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AstExprCmpBinary::CMP_SUBQUERY, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 652 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("SUBQUERY", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 101:
 /* Line 868 of glr.c  */
-#line 691 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AstExprCmpBinary::CMP_ANY,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 653 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("ANY",		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 102:
 /* Line 868 of glr.c  */
-#line 692 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AstExprCmpBinary::CMP_SOME,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 654 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("SOME",		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 103:
 /* Line 868 of glr.c  */
-#line 693 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AstExprCmpBinary::CMP_ALL,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok),(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 655 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("ALL",		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.subtok), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 104:
 /* Line 868 of glr.c  */
-#line 694 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_BIT_OR,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 657 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("|",	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 105:
 /* Line 868 of glr.c  */
-#line 695 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_BIT_AND,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 658 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("&",	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 106:
 /* Line 868 of glr.c  */
-#line 696 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_BIT_XOR,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 659 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("^",	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 107:
 /* Line 868 of glr.c  */
-#line 697 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(SHIFT==1?AST_EXPR_LSHIFT:AST_EXPR_RSHIFT,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 660 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary(SHIFT==1?"LSHIFT":"RSHIFT",(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node),(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 108:
 /* Line 868 of glr.c  */
-#line 698 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_NOR,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
+#line 662 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("!",	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 109:
 /* Line 868 of glr.c  */
-#line 699 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_NOR,(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
+#line 663 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("NOT",	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (2))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 110:
 /* Line 868 of glr.c  */
-#line 700 "sql.ypp"
+#line 664 "sql.ypp"
     { ((*yyvalp).ast_node) = NULL; }
     break;
 
   case 111:
 /* Line 868 of glr.c  */
-#line 701 "sql.ypp"
+#line 665 "sql.ypp"
     { ((*yyvalp).ast_node) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 112:
 /* Line 868 of glr.c  */
-#line 704 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_ISNULL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 668 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("IS_NULL", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 113:
 /* Line 868 of glr.c  */
-#line 705 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_NOTNULL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 669 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("IS_NOT_NULL", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 114:
 /* Line 868 of glr.c  */
-#line 706 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_ISBOOL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 670 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("IS_BOOL", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 115:
 /* Line 868 of glr.c  */
-#line 707 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_ISNOTBOOL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 671 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("IS_NOT_BOOL", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 116:
 /* Line 868 of glr.c  */
-#line 710 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprTernary(AST_EXPR_BETWEEN,(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 674 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("BETWEEN_AND", (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 117:
 /* Line 868 of glr.c  */
-#line 714 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprList(AST_EXPR_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node), NULL);}
+#line 677 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node), NULL);}
     break;
 
   case 118:
 /* Line 868 of glr.c  */
-#line 715 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprList(AST_EXPR_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 678 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 119:
 /* Line 868 of glr.c  */
-#line 716 "sql.ypp"
+#line 679 "sql.ypp"
     { ((*yyvalp).ast_node) = (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node); }
     break;
 
   case 120:
 /* Line 868 of glr.c  */
-#line 719 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprList(AST_EXPR_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 682 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (1))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 121:
 /* Line 868 of glr.c  */
-#line 720 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprList(AST_EXPR_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 683 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprList((((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 122:
 /* Line 868 of glr.c  */
-#line 723 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_IN_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 686 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("EXPR_IN_LIST", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 123:
 /* Line 868 of glr.c  */
-#line 724 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_LIST_IN_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node)); }
+#line 687 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("LIST_IN_LIST",			(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 124:
 /* Line 868 of glr.c  */
-#line 725 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_NOTIN_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 688 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("EXPR_NOT_IN_LIST", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 125:
 /* Line 868 of glr.c  */
-#line 726 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_LIST_NOTIN_LIST, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
+#line 689 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("LIST_NOT_IN_LIST", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 126:
 /* Line 868 of glr.c  */
-#line 727 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_IN_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 690 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("EXPR_IN_SELECT", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 127:
 /* Line 868 of glr.c  */
-#line 728 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_LIST_IN_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node)); }
+#line 691 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("LIST_IN_SELECT", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 128:
 /* Line 868 of glr.c  */
-#line 729 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_NOTIN_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 692 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("EXPR_NOT_IN_SELECT", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 129:
 /* Line 868 of glr.c  */
-#line 730 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCmpBinary(AST_EXPR_LIST_NOTIN_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
+#line 693 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCmpBinary("LIST_NOT_IN_SELECT", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 130:
 /* Line 868 of glr.c  */
-#line 731 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_EXSIST_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 695 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("EXSIST", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 131:
 /* Line 868 of glr.c  */
-#line 732 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_EXPR_NOTEXSIST_SEL, (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 696 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("NOT_EXSIST", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 132:
 /* Line 868 of glr.c  */
-#line 742 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_COUNT_ALL, NULL); }
+#line 706 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("COUNT_ALL", NULL); }
     break;
 
   case 133:
 /* Line 868 of glr.c  */
-#line 743 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_COUNT_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 707 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("COUNT",	 (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 134:
 /* Line 868 of glr.c  */
-#line 744 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_SUM_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 708 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("SUM",	 	 (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 135:
 /* Line 868 of glr.c  */
-#line 745 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_AVG_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 709 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("AVG",	 	 (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 136:
 /* Line 868 of glr.c  */
-#line 746 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_MIN_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 710 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("MIN",	 	 (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 137:
 /* Line 868 of glr.c  */
-#line 747 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprUnary(AST_MAX_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 711 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprUnary("MAX",	 	 (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 138:
 /* Line 868 of glr.c  */
-#line 751 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_SUBSTRING_EXPR_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 715 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("SUBSTRING_EXPR_EXPR", 				(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), 	NULL); }
     break;
 
   case 139:
 /* Line 868 of glr.c  */
-#line 752 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_SUBSTRING_EXPR_FROM_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), NULL);}
+#line 716 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("SUBSTRING_EXPR_FROM_EXPR", 			(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), 	NULL);}
     break;
 
   case 140:
 /* Line 868 of glr.c  */
-#line 753 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_SUBSTRING_EXPR_EXPR_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
+#line 717 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("SUBSTRING_EXPR_EXPR_EXPR", 			(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (8))].yystate.yysemantics.yysval.ast_node), 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 141:
 /* Line 868 of glr.c  */
-#line 754 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_SUBSTRING_EXPR_FROM_EXPR_FOR_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
+#line 718 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("SUBSTRING_EXPR_FROM_EXPR_FOR_EXPR", (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (8))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (8))].yystate.yysemantics.yysval.ast_node), 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((7) - (8))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 142:
 /* Line 868 of glr.c  */
-#line 755 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_TRIM_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL, NULL); }
+#line 719 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("TRIM_TRAILING", 					(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL, 	NULL); }
     break;
 
   case 143:
 /* Line 868 of glr.c  */
-#line 756 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_TRIM_LTB_EXPR, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (7))].yystate.yysemantics.yysval.strval), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node)); }
+#line 720 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc((((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (7))].yystate.yysemantics.yysval.strval), 									(((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (7))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((6) - (7))].yystate.yysemantics.yysval.ast_node), 	NULL); }
     break;
 
   case 144:
 /* Line 868 of glr.c  */
-#line 757 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_UPPER, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL, NULL); }
+#line 721 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("UPPER", 							(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL,	NULL); }
     break;
 
   case 145:
 /* Line 868 of glr.c  */
-#line 758 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_CAST,(((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 722 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("CAST",								(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node),  	NULL); }
     break;
 
   case 146:
 /* Line 868 of glr.c  */
-#line 759 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_COALESCE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL, NULL); }
+#line 723 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("COALESCE", 							(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL, 	NULL); }
     break;
 
   case 147:
 /* Line 868 of glr.c  */
-#line 762 "sql.ypp"
-    { ((*yyvalp).strval)="FTRIM1"; }
+#line 726 "sql.ypp"
+    { ((*yyvalp).strval)="TRIM_LEADING"; }
     break;
 
   case 148:
 /* Line 868 of glr.c  */
-#line 763 "sql.ypp"
-    { ((*yyvalp).strval)="FTRIM2"; }
+#line 727 "sql.ypp"
+    { ((*yyvalp).strval)="TRIM_TRAILING"; }
     break;
 
   case 149:
 /* Line 868 of glr.c  */
-#line 764 "sql.ypp"
-    { ((*yyvalp).strval)="FTRIM0"; }
+#line 728 "sql.ypp"
+    { ((*yyvalp).strval)="TRIM_BOTH"; }
     break;
 
   case 150:
 /* Line 868 of glr.c  */
-#line 767 "sql.ypp"
+#line 731 "sql.ypp"
     { ((*yyvalp).ast_node) = NULL;}
     break;
 
   case 151:
 /* Line 868 of glr.c  */
-#line 768 "sql.ypp"
-    { string d = "int"; ((*yyvalp).ast_node) = new AstExprConst(AST_DATE_INT, d);}
+#line 732 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstExprConst("INT", 	NULL);}
     break;
 
   case 152:
 /* Line 868 of glr.c  */
-#line 769 "sql.ypp"
-    { string d = "string"; ((*yyvalp).ast_node) = new AstExprConst(AST_DATE_STRING, d);}
+#line 733 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstExprConst("STRING", NULL);}
     break;
 
   case 153:
 /* Line 868 of glr.c  */
-#line 770 "sql.ypp"
-    { string d = "double"; ((*yyvalp).ast_node) = new AstExprConst(AST_DATE_DOUBLE, d);}
+#line 734 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstExprConst("DOUBLE", NULL);}
     break;
 
   case 154:
 /* Line 868 of glr.c  */
-#line 771 "sql.ypp"
-    { string d = "float"; ((*yyvalp).ast_node) = new AstExprConst(AST_DATE_FLOAT, d);}
+#line 735 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstExprConst("FLOAT", 	NULL);}
     break;
 
   case 155:
 /* Line 868 of glr.c  */
-#line 772 "sql.ypp"
-    { string d = "char"; ((*yyvalp).ast_node) =new AstExprConst(AST_DATE_CHAR, d);}
+#line 736 "sql.ypp"
+    {((*yyvalp).ast_node) = new AstExprConst("CHAR", 	NULL);}
     break;
 
   case 156:
 /* Line 868 of glr.c  */
-#line 775 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_DATE_ADD, (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 739 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("DATE_ADD", (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 157:
 /* Line 868 of glr.c  */
-#line 776 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_DTAE_SUB, (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 740 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("DATE_SUB", (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 158:
 /* Line 868 of glr.c  */
-#line 780 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_DAY_HOUR, "INTERVAL_HOUR", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 744 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_HOUR", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 159:
 /* Line 868 of glr.c  */
-#line 781 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_DAY_MS, "INTERVAL_MICROSECOND", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 745 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_MICROSECOND", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 160:
 /* Line 868 of glr.c  */
-#line 782 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_DAY_MIN, "INTERVAL_MINUTE", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 746 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_MINUTE", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 161:
 /* Line 868 of glr.c  */
-#line 783 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_DAY_SEC, "INTERVAL_SECOND", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 747 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_SECOND", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 162:
 /* Line 868 of glr.c  */
-#line 784 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_DAY, "INTERVAL_DAY", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 748 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_DAY", 			(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 163:
 /* Line 868 of glr.c  */
-#line 785 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_YEAR_MON, "INTERVAL_MONTH", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 749 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_MONTH", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 164:
 /* Line 868 of glr.c  */
-#line 786 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_YEAR, "INTERVAL_YEAR", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 750 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_YEAR", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 165:
 /* Line 868 of glr.c  */
-#line 787 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_WEEK, "INTERVAL_WEEK", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 751 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_WEEK", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 166:
 /* Line 868 of glr.c  */
-#line 788 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_INTERVAL_EXPR_QUARTER, "INTERVAL_QUARTER", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL);  }
+#line 752 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("INTERVAL_QUARTER", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL, NULL);  }
     break;
 
   case 167:
 /* Line 868 of glr.c  */
-#line 792 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_CASE_EXPR_LIST, "CASE1", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 756 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("CASE1", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node), 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (4))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 168:
 /* Line 868 of glr.c  */
-#line 793 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_CASE_EXPR_LIST_ELSE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
+#line 757 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("CASE1_ELSE", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (6))].yystate.yysemantics.yysval.ast_node), 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (6))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (6))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 169:
 /* Line 868 of glr.c  */
-#line 794 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_CASE_LIST, "CASE3", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL); }
+#line 758 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("CASE2", 		NULL,	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (3))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 170:
 /* Line 868 of glr.c  */
-#line 795 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprString(AST_CASE_LIST_ELSE_EXPR, "CASE4", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 759 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("CASE2_ELSE", 	NULL, 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 171:
 /* Line 868 of glr.c  */
-#line 798 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_WHEN_EXPR_THEN, (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 762 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("WHEN", (((yyGLRStackItem const *)yyvsp)[YYFILL ((2) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node), NULL); }
     break;
 
   case 172:
 /* Line 868 of glr.c  */
-#line 799 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprTernary(AST_LIST_WHEN_EXPR_THEN, (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node)); }
+#line 763 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprFunc("WHEN", (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((5) - (5))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (5))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 173:
 /* Line 868 of glr.c  */
-#line 802 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_LIKE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 766 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("LIKE", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 174:
 /* Line 868 of glr.c  */
-#line 803 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_NOTLIKE, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 767 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("NOT_LIKE", (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 175:
 /* Line 868 of glr.c  */
-#line 806 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_REGEXP, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
+#line 770 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("REGEXP", 		(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (3))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((3) - (3))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
   case 176:
 /* Line 868 of glr.c  */
-#line 807 "sql.ypp"
-    { ((*yyvalp).ast_node) = new AstExprCalBinary(AST_EXPR_NOTREGEXP, (((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
+#line 771 "sql.ypp"
+    { ((*yyvalp).ast_node) = new AstExprCalBinary("NOT_REGEXP", 	(((yyGLRStackItem const *)yyvsp)[YYFILL ((1) - (4))].yystate.yysemantics.yysval.ast_node), (((yyGLRStackItem const *)yyvsp)[YYFILL ((4) - (4))].yystate.yysemantics.yysval.ast_node)); }
     break;
 
 
 /* Line 868 of glr.c  */
-#line 2841 "sql.tab.cpp"
+#line 2817 "sql.tab.cpp"
       default: break;
     }
 
@@ -4478,7 +4454,7 @@ yypdumpstack (yyGLRStack* yystackp)
 }
 #endif
 /* Line 2575 of glr.c  */
-#line 811 "sql.ypp"
+#line 775 "sql.ypp"
 
 
 void emit(char *s, ...)
