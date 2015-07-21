@@ -10,12 +10,8 @@ Install cpp_parser:
 
 Uninstall cpp_parser:
 1. make distclean
-<<<<<<< HEAD
 2. ./build clean
 
-
+parse sql:
 bison -d sql.ypp
 flex sql.l
-=======
-2. ./build.sh clean
->>>>>>> refs/remotes/origin/fzh0629
