@@ -54,7 +54,12 @@ AstNode* Parser::CreateRawAST(string SQL_statement) {
                            presult.yyscan_info_);
         yy_switch_to_buffer(bp, presult.yyscan_info_);
         if (!yyparse(&presult)) {
+          if (presult.ast != NULL) {
             AST_root_ = presult.ast;
+          } else {
+            printf("SQL parse failed, ast is null!\n");
+            AST_root_ = NULL;
+          }
         } else {
             printf("SQL parse failed\n");
             AST_root_ = NULL;
