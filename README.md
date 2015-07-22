@@ -1,10 +1,10 @@
-# cpp_parser
+# sql_parser
 sql parser in c++
 
 please install the some software in thirdparty/ first,
 remember that install gflags first before glog 
 
-Install cpp_parser:
+Install sql_parser:
 
 1. please read the README file in third_party.
 2. ./build.sh init
@@ -12,7 +12,7 @@ Install cpp_parser:
 4. make
 5. make install
 
-Uninstall cpp_parser:
+Uninstall sql_parser:
 
 1. make distclean
 2. ./build clean
