@@ -12,10 +12,15 @@
 #include <glog/logging.h>
 #include <glog/raw_logging.h>
 #include <gflags/gflags.h>
+
+#define LOG_INFO LOG(INFO)
+#define LOG_WARNING LOG(WARNING)
+#define LOG_ERROR LOG(ERROR)
+
 void GlogSignalHandle(const char* data, int size);
 class Logging {
  public:
-    Logging(char* program);
+    explicit Logging(char* program);
     ~Logging();
 };
 

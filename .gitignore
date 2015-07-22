@@ -9,7 +9,6 @@ conf/config
 Config.cpp
 /config.guess
 /config.h
-/config.h.in
 config.log
 config.status
 /config.sub
@@ -18,7 +17,7 @@ cproject
 *.dat*
 Debug.h
 Default
-/depcomp
+depcomp
 /doc
 .gitignore.swp
 .history
