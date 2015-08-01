@@ -41,4 +41,4 @@ stamp-h1
 .svn/*
 test/main/parser_test
 .cproject
-thirdparty/
+thirdparty/incompressed_bag/
