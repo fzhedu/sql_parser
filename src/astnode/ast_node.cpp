@@ -12,6 +12,9 @@
 #include <iomanip>
 
 using namespace std;
+using std::cout;
+using std::setw;
+using std::endl;
 
 AstNode::AstNode(AstNodeType ast_node_type)
         : ast_node_type_(ast_node_type) {

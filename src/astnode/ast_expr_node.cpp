@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <string>
 #include <bitset>
+
 using std::cout;
 using std::endl;
 using std::cin;
