@@ -11,6 +11,7 @@
 #define AST_SELECT_STMT_H_
 #include "./ast_node.h"
 #include <string>
+using std::string;
 class AstSelectList : public AstNode {
  public:
     AstSelectList(bool is_all, AstNode* args, AstNode* next);
@@ -22,11 +23,11 @@ class AstSelectList : public AstNode {
 };
 class AstSelectExpr : public AstNode {
  public:
-    AstSelectExpr(std::string expr_alias, AstNode* expr);
+    AstSelectExpr(string expr_alias, AstNode* expr);
     ~AstSelectExpr();
     void Print(int level = 0) const;
 
-    std::string expr_alias_;
+    string expr_alias_;
     AstNode* expr_;
 };
 class AstFromList : public AstNode {
@@ -42,33 +43,33 @@ class AstFromList : public AstNode {
 
 class AstTable : public AstNode {
  public:
-    AstTable(std::string db_name, std::string table_name,
-             std::string table_alias);
+    AstTable(string db_name, string table_name,
+             string table_alias);
     ~AstTable();
     void Print(int level = 0) const;
 
-    std::string db_name_;
-    std::string table_name_;
-    std::string table_alias_;
+    string db_name_;
+    string table_name_;
+    string table_alias_;
     int table_id_;
 // AstNode* condition_; //
 };
 
 class AstSubquery : public AstNode {
  public:
-    AstSubquery(std::string subquery_alias, AstNode* subquery);
+    AstSubquery(string subquery_alias, AstNode* subquery);
     ~AstSubquery();
     void Print(int level = 0) const;
 
-    std::string subquery_alias_;
+    string subquery_alias_;
     AstNode* subquery_;
 };
 class AstJoinCondition : public AstNode {
  public:
-    AstJoinCondition(std::string join_condition_type, AstNode* condition);
+    AstJoinCondition(string join_condition_type, AstNode* condition);
     ~AstJoinCondition();
     void Print(int level = 0) const;
-    std::string join_condition_type_;
+    string join_condition_type_;
     AstNode* condition_;
 };
 class AstJoin : public AstNode {
@@ -77,7 +78,7 @@ class AstJoin : public AstNode {
             AstNode* join_condition);
     ~AstJoin();
     void Print(int level = 0) const;
-    std::string join_type_;
+    string join_type_;
     AstNode* left_table_;
     AstNode* right_table_;
     AstJoinCondition* join_condition_;
@@ -112,7 +113,7 @@ class AstOrderByList : public AstNode {
     ~AstOrderByList();
     void Print(int level = 0) const;
     AstNode* expr_;
-    std::string orderby_type_;
+    string orderby_type_;
     AstNode* next_;
 };
 class AstOrderByClause : public AstNode {
@@ -145,13 +146,13 @@ class AstSelectIntoClause : public AstNode {
 };
 class AstColumn : public AstNode {
  public:
-    AstColumn(std::string relation_name, std::string column_name);
-    AstColumn(std::string relation_name, std::string column_name,
+    AstColumn(string relation_name, string column_name);
+    AstColumn(string relation_name, string column_name,
               AstNode* next);
     ~AstColumn();
     void Print(int level = 0) const;
-    std::string relation_name_;
-    std::string column_name_;
+    string relation_name_;
+    string column_name_;
     AstNode* next_;
 };
 class AstSelectStmt : public AstNode {
@@ -167,7 +168,7 @@ class AstSelectStmt : public AstNode {
                   AstNode* limit_clause, AstNode* select_into_clause);
     ~AstSelectStmt();
     void Print(int level = 0) const;
-    std::string select_str_;
+    string select_str_;
     SelectOpts select_opts_;
     AstNode* select_list_;
     AstNode* from_list_;
