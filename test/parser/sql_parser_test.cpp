@@ -17,34 +17,35 @@ using namespace std;
 string SqlStmt[THREAD_NUM];
 AstNode* MyAst[THREAD_NUM];
 void* my_thread(void* args) {
-	int id = *(int *) args;
-	Parser* my_parser = new Parser(SqlStmt[id % 2]);
-	AstNode* my_ast = my_parser->GetRawAST();
-	MyAst[id] = my_ast;	//save parser result
+  int id = *(int *) args;
+  Parser* my_parser = new Parser(SqlStmt[id % 2]);
+  AstNode* my_ast = my_parser->GetRawAST();
+  MyAst[id] = my_ast;  //save parser result
 //	my_ast->Print();
-	RAW_LOG(INFO,"one thread over!");
+  RAW_LOG(INFO, "one thread over!");
 
-	return NULL;
+  return NULL;
 }
 void test_multi_thread() {
-	SqlStmt[0] = string("select AAA from BBB where CCC limit 333;");
-	SqlStmt[1] = string("select a as A from tb as TB where c group by d having e order by f limit 10,3;");
-	pthread_t ptid[THREAD_NUM];
-	int id[THREAD_NUM];
-	FLAGS_logtostderr=1;
-	for (int i = 0; i < THREAD_NUM; i++) {
-		id[i] = i;
-		int flag = pthread_create(&ptid[i], NULL, my_thread, &id[i]);
-		if (flag != 0) {
-		    LOG(WARNING) << "warning:failed create my thread";
-		} else {
-			LOG(INFO)<<"info:succeed create my thread";
-		}
-	}
-	for (int i = 0; i < THREAD_NUM; i++) {
-		pthread_join(ptid[i], NULL);
-	}
-	for (int i = 0; i < THREAD_NUM; i++) {
-		MyAst[i]->Print();
-	}
+  SqlStmt[0] = string("select AAA from BBB where CCC limit 333;");
+  SqlStmt[1] = string("select a as A from tb as TB where c group"
+      " by d having e order by f limit 10,3;");
+  pthread_t ptid[THREAD_NUM];
+  int id[THREAD_NUM];
+  // FLAGS_logtostderr = 1;
+  for (int i = 0; i < THREAD_NUM; i++) {
+    id[i] = i;
+    int flag = pthread_create(&ptid[i], NULL, my_thread, &id[i]);
+    if (flag != 0) {
+      LOG(WARNING)<< "warning:failed create my thread";
+    } else {
+      LOG(INFO)<< "info:succeed create my thread";
+    }
+  }
+  for (int i = 0; i < THREAD_NUM; i++) {
+    pthread_join(ptid[i], NULL);
+  }
+  for (int i = 0; i < THREAD_NUM; i++) {
+    MyAst[i]->Print();
+  }
 }

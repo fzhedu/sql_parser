@@ -7,8 +7,10 @@
  * Description:
  */
 
-#ifndef SQL_PARSER_SRC_COMMON_LOGGING_H_
-#define SQL_PARSER_SRC_COMMON_LOGGING_H_
+#ifndef SRC_COMMON_LOGGING_H_
+#define SRC_COMMON_LOGGING_H_
+#define NDEBUG  // switch to no_debug mode
+
 #include <glog/logging.h>
 #include <glog/raw_logging.h>
 #include <gflags/gflags.h>
@@ -24,4 +26,4 @@ class Logging {
     ~Logging();
 };
 
-#endif /* SQL_PARSER_SRC_COMMON_LOGGING_H_ */
+#endif /* SRC_COMMON_LOGGING_H_ */
