@@ -482,27 +482,27 @@ stmt: select_stmt { $$ = $1;}
 select_stmt: 
 	SELECT select_opts select_expr_list
 	{
-		$$=new AstSelectStmt($2,$3,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+		$$=new AstSelectStmt(AST_SELECT_STMT, $2,$3,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 	}
 	| SELECT select_opts select_expr_list FROM table_references opt_where 
     			opt_groupby opt_having opt_orderby opt_limit opt_into_list 
 	{
-		$$=new AstSelectStmt($2,$3,$5,$6,$7,$8,$9,$10,$11);
+		$$=new AstSelectStmt(AST_SELECT_STMT, $2,$3,$5,$6,$7,$8,$9,$10,$11);
 	}
 	;
 
 opt_where: 			{ $$ = NULL;}
-	| WHERE expr	{ $$ = new AstWhereClause($2);}
+	| WHERE expr	{ $$ = new AstWhereClause(AST_WHERE_CLAUSE, $2);}
 	;
 
 opt_groupby:									{ $$ = NULL;}
-	| GROUP BY groupby_list opt_with_rollup 	{ $$ = new AstGroupByClause($3, $4);}
+	| GROUP BY groupby_list opt_with_rollup 	{ $$ = new AstGroupByClause(AST_GROUPBY_CLAUSE, $3, $4);}
 	;
 
 
 groupby_list: 
-	  expr 					{ $$=new AstGroupByList($1, NULL); }
-	| expr ',' groupby_list { $$=new AstGroupByList($1, $3); };
+	  expr 					{ $$=new AstGroupByList(AST_GROUPBY_LIST, $1, NULL); }
+	| expr ',' groupby_list { $$=new AstGroupByList(AST_GROUPBY_LIST, $1, $3); };
 
 opt_asc_desc:  	{ $$ = 0; }
    	| ASC      	{ $$ = 0; }
@@ -514,19 +514,19 @@ opt_with_rollup:	{ $$ = 0; }
    	;
 
 opt_having:			{ $$=NULL; }
-	| HAVING expr 	{ $$=new AstHavingClause($2);	}
+	| HAVING expr 	{ $$=new AstHavingClause(AST_HAVING_CLAUSE, $2);	}
 	;
 
 opt_orderby:					{ $$=NULL; }
-	| ORDER BY orderby_list 	{ $$=new AstOrderByClause($3); }
+	| ORDER BY orderby_list 	{ $$=new AstOrderByClause(AST_ORDERBY_CLAUSE, $3); }
 	;
 orderby_list:
-	expr opt_asc_desc                   	{ $$=new AstOrderByList($1, $2, NULL);}
-	| expr opt_asc_desc ',' orderby_list 	{ $$=new AstOrderByList($1, $2, $4); }
+	expr opt_asc_desc                   	{ $$=new AstOrderByList(AST_ORDERBY_LIST, $1, $2, NULL);}
+	| expr opt_asc_desc ',' orderby_list 	{ $$=new AstOrderByList(AST_ORDERBY_LIST, $1, $2, $4); }
 	;
 opt_limit: 	 				{ $$ = NULL; }
-	| LIMIT expr 			{ $$=new AstLimitClause(NULL,$2);}
-  	| LIMIT expr ',' expr 	{ $$=new AstLimitClause($2,$4);}
+	| LIMIT expr 			{ $$=new AstLimitClause(AST_LIMIT_CLAUSE, NULL,$2);}
+  	| LIMIT expr ',' expr 	{ $$=new AstLimitClause(AST_LIMIT_CLAUSE, $2,$4);}
   	; 
 
 opt_into_list:			{ $$=NULL; }
@@ -534,8 +534,8 @@ opt_into_list:			{ $$=NULL; }
    ;
 
 column_list: 
-	NAME 					{ $$ = new AstColumn(string("NULL"), string($1));}
-  	| NAME ',' column_list 	{ $$ = new AstColumn(string("NULL"), string($1), $3);}
+	NAME 					{ $$ = new AstColumn(AST_COLUMN, string("NULL"), string($1));}
+  	| NAME ',' column_list 	{ $$ = new AstColumn(AST_COLUMN, string("NULL"), string($1), $3);}
   	;
 
 select_opts:							{ $$ = 0; }
@@ -550,18 +550,18 @@ select_opts:							{ $$ = 0; }
     ;
 
 select_expr_list:
-	select_expr							{ $$ = new AstSelectList(0,$1,NULL);}
-    | select_expr ',' select_expr_list	{ $$ = new AstSelectList(0,$1,$3);}
-    | '*'								{ $$ = new AstSelectList(1,NULL,NULL);}
-    | '*' ',' select_expr_list			{ $$ = new AstSelectList(1,NULL,$3); }
+	select_expr							{ $$ = new AstSelectList(AST_SELECT_LIST, 0,$1,NULL);}
+    | select_expr ',' select_expr_list	{ $$ = new AstSelectList(AST_SELECT_LIST, 0,$1,$3);}
+    | '*'								{ $$ = new AstSelectList(AST_SELECT_LIST, 1,NULL,NULL);}
+    | '*' ',' select_expr_list			{ $$ = new AstSelectList(AST_SELECT_LIST, 1,NULL,$3); }
     ;
 
 select_expr: 
-	expr opt_as_alias	{$$ = new AstSelectExpr(string($2),$1);}
+	expr opt_as_alias	{$$ = new AstSelectExpr(AST_SELECT_EXPR, string($2),$1);}
 	;
 
-table_references: table_reference			{ $$ = new AstFromList($1,NULL); }
-    | table_reference ',' table_references	{ $$ = new AstFromList($1,$3);}
+table_references: table_reference			{ $$ = new AstFromList(AST_FROM_LIST, $1, NULL); }
+    | table_reference ',' table_references	{ $$ = new AstFromList(AST_FROM_LIST, $1,$3);}
     ;
 
 table_reference:
@@ -571,10 +571,10 @@ table_reference:
 
 table_factor:
 	NAME opt_as_alias/* index_hint */
-									{ $$ = new AstTable(string("NULL"),string($1),string($2));}
+									{ $$ = new AstTable(AST_TABLE, string("NULL"),string($1),string($2));}
   	| NAME '.' NAME opt_as_alias /*index_hint*/ 
-  									{ $$ = new AstTable(string($1),string($3),string($4)); }
-  	| table_subquery opt_as NAME  	{ $$ = new AstSubquery(string($3),$1); }
+  									{ $$ = new AstTable(AST_TABLE, string($1),string($3),string($4)); }
+  	| table_subquery opt_as NAME  	{ $$ = new AstSubquery(AST_SUBQUERY, string($3),$1); }
 	| '(' table_references ')' 		{ $$ = $2; }
   	;
 
@@ -598,11 +598,11 @@ straight_join -1
 */
 
 join_table:
-	table_reference opt_inner_cross JOIN table_factor opt_join_condition		{ $$ = new AstJoin($2, $1, $4, $5);}
-	| table_reference STRAIGHT_JOIN table_factor 								{ $$ = new AstJoin(-1, $1, $3, NULL);}
-	| table_reference STRAIGHT_JOIN table_factor ON expr  						{ $$ = new AstJoin(-1, $1, $3, $5);}
-  	| table_reference left_or_right opt_outer JOIN table_factor join_condition	{ $$ = new AstJoin($2 + $3, $1, $5, $6);}
-  	| table_reference NATURAL opt_left_or_right_outer JOIN table_factor			{ $$ = new AstJoin(32 + $3, $1, $5, NULL);}
+	table_reference opt_inner_cross JOIN table_factor opt_join_condition		{ $$ = new AstJoin(AST_JOIN, $2, $1, $4, $5);}
+	| table_reference STRAIGHT_JOIN table_factor 								{ $$ = new AstJoin(AST_JOIN, -1, $1, $3, NULL);}
+	| table_reference STRAIGHT_JOIN table_factor ON expr  						{ $$ = new AstJoin(AST_JOIN, -1, $1, $3, $5);}
+  	| table_reference left_or_right opt_outer JOIN table_factor join_condition	{ $$ = new AstJoin(AST_JOIN, $2 + $3, $1, $5, $6);}
+  	| table_reference NATURAL opt_left_or_right_outer JOIN table_factor			{ $$ = new AstJoin(AST_JOIN, 32 + $3, $1, $5, NULL);}
   	;
 
 opt_inner_cross: 	{ $$ = 0; }
@@ -634,8 +634,8 @@ using 2
 */
 
 join_condition: 
-	  ON expr 					{$$ = new AstJoinCondition("ON", $2); }
-    | USING '(' column_list ')' {$$ = new AstJoinCondition("USING", $3); }
+	  ON expr 					{$$ = new AstJoinCondition(AST_JOIN_CONDITION, "ON", $2); }
+    | USING '(' column_list ')' {$$ = new AstJoinCondition(AST_JOIN_CONDITION, "USING", $3); }
     ;
 
 
@@ -647,75 +647,75 @@ table_subquery:
 
 
    /**** expressions ****/	
-expr: NAME                                      { $$ = new AstColumn(string("NULL"),string($1));}
-   | USERVAR                                    { $$ = new AstExprConst("CONST",string($1)); }
-   | NAME '.' NAME                              { $$ = new AstColumn(string($1),string($3)); }
-   | NAME '.' '*'                               { $$ = new AstColumn(string($1),string("*"));}
-   | STRING                                     { $$ = new AstExprConst("CONST_STRING",	string($1)); }
-   | INTNUM                                     { $$ = new AstExprConst("CONST_INT",		string($1)); }	
-   | APPROXNUM                                  { $$ = new AstExprConst("CONST_DOUBLE",	string($1)); }	
-   | BOOL                                       { $$ = new AstExprConst("CONST_BOOL",	string($1)); }
+expr: NAME                                      { $$ = new AstColumn(AST_COLUMN, string("NULL"),string($1));}
+   | USERVAR                                    { $$ = new AstExprConst(AST_EXPR_CONST, "CONST",string($1)); }
+   | NAME '.' NAME                              { $$ = new AstColumn(AST_COLUMN, string($1),string($3)); }
+   | NAME '.' '*'                               { $$ = new AstColumn(AST_COLUMN, string($1),string("*"));}
+   | STRING                                     { $$ = new AstExprConst(AST_EXPR_CONST, "CONST_STRING",	string($1)); }
+   | INTNUM                                     { $$ = new AstExprConst(AST_EXPR_CONST, "CONST_INT",		string($1)); }	
+   | APPROXNUM                                  { $$ = new AstExprConst(AST_EXPR_CONST, "CONST_DOUBLE",	string($1)); }	
+   | BOOL                                       { $$ = new AstExprConst(AST_EXPR_CONST, "CONST_BOOL",	string($1)); }
    ;
-expr: expr '+' expr 		                    { $$ = new AstExprCalBinary("+",   $1, $3); }
-   | expr '-' expr 			                    { $$ = new AstExprCalBinary("-",   $1, $3); }
-   | expr '*' expr 			                    { $$ = new AstExprCalBinary("*",   $1, $3); }
-   | expr '/' expr 			                    { $$ = new AstExprCalBinary("/",   $1, $3); }
-   | expr MOD expr                              { $$ = new AstExprCalBinary("MOD", $1, $3); }
-   | expr '%' expr                              { $$ = new AstExprCalBinary("%",   $1, $3); }
+expr: expr '+' expr 		                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "+",   $1, $3); }
+   | expr '-' expr 			                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "-",   $1, $3); }
+   | expr '*' expr 			                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "*",   $1, $3); }
+   | expr '/' expr 			                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "/",   $1, $3); }
+   | expr MOD expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "MOD", $1, $3); }
+   | expr '%' expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "%",   $1, $3); }
    
-   | '-' expr %prec UMINUS                      { $$ = new AstExprUnary("-", $2); }
-   | '+' expr %prec UMINUS                      { $$ = new AstExprUnary("+", $2); }
+   | '-' expr %prec UMINUS                      { $$ = new AstExprUnary(AST_EXPR_UNARY, "-", $2); }
+   | '+' expr %prec UMINUS                      { $$ = new AstExprUnary(AST_EXPR_UNARY, "+", $2); }
 
-   | expr ANDOP expr                            { $$ = new AstExprCalBinary("AND", $1, $3); }
-   | expr OR expr                               { $$ = new AstExprCalBinary("OR",  $1, $3); }
-   | expr XOR expr                              { $$ = new AstExprCalBinary("XOR", $1, $3); }
+   | expr ANDOP expr                            { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "AND", $1, $3); }
+   | expr OR expr                               { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "OR",  $1, $3); }
+   | expr XOR expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "XOR", $1, $3); }
 
-   | expr COMPARISON expr	                    { $$ = new AstExprCmpBinary("", 		$2, $1, $3); }
-   | expr COMPARISON 	  '(' select_stmt ')'   { $$ = new AstExprCmpBinary("SUBQUERY", $2, $1, $4); }
-   | expr COMPARISON ANY  '(' select_stmt ')'   { $$ = new AstExprCmpBinary("ANY",		$2, $1, $5); }
-   | expr COMPARISON SOME '(' select_stmt ')'   { $$ = new AstExprCmpBinary("SOME",		$2, $1, $5); }
-   | expr COMPARISON ALL  '(' select_stmt ')'   { $$ = new AstExprCmpBinary("ALL",		$2, $1, $5); }
+   | expr COMPARISON expr	                    { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "", 		$2, $1, $3); }
+   | expr COMPARISON 	  '(' select_stmt ')'   { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "SUBQUERY", $2, $1, $4); }
+   | expr COMPARISON ANY  '(' select_stmt ')'   { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "ANY",		$2, $1, $5); }
+   | expr COMPARISON SOME '(' select_stmt ')'   { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "SOME",		$2, $1, $5); }
+   | expr COMPARISON ALL  '(' select_stmt ')'   { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "ALL",		$2, $1, $5); }
    
-   | expr '|' expr                              { $$ = new AstExprCalBinary("|",	$1, $3); }  
-   | expr '&' expr                              { $$ = new AstExprCalBinary("&",	$1, $3); }  
-   | expr '^' expr                              { $$ = new AstExprCalBinary("^",	$1, $3); }  
-   | expr SHIFT expr                            { $$ = new AstExprCalBinary(SHIFT==1?"LSHIFT":"RSHIFT",$1,$3); }
+   | expr '|' expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "|",	$1, $3); }  
+   | expr '&' expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "&",	$1, $3); }  
+   | expr '^' expr                              { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "^",	$1, $3); }  
+   | expr SHIFT expr                            { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, SHIFT==1?"LSHIFT":"RSHIFT",$1,$3); }
    
-   | '!' expr                                   { $$ = new AstExprUnary("!",	$2); }
-   | NOT expr %dprec 1                          { $$ = new AstExprUnary("NOT",	$2); }
+   | '!' expr                                   { $$ = new AstExprUnary(AST_EXPR_UNARY, "!",	$2); }
+   | NOT expr %dprec 1                          { $$ = new AstExprUnary(AST_EXPR_UNARY, "NOT",	$2); }
    | USERVAR ASSIGN expr	                    { $$ = NULL; }		
    | '(' expr ')'		                        { $$ = $2; }
    ;    
 
-expr:  expr IS NULLX     						{ $$ = new AstExprUnary("IS_NULL", 		$1); }
-   |   expr IS NOT NULLX 						{ $$ = new AstExprUnary("IS_NOT_NULL", 	$1); }
-   |   expr IS BOOL      						{ $$ = new AstExprUnary("IS_BOOL", 		$1); }
-   |   expr IS NOT BOOL  						{ $$ = new AstExprUnary("IS_NOT_BOOL", 	$1); }
+expr:  expr IS NULLX     						{ $$ = new AstExprUnary(AST_EXPR_UNARY, "IS_NULL", 		$1); }
+   |   expr IS NOT NULLX 						{ $$ = new AstExprUnary(AST_EXPR_UNARY, "IS_NOT_NULL", 	$1); }
+   |   expr IS BOOL      						{ $$ = new AstExprUnary(AST_EXPR_UNARY, "IS_BOOL", 		$1); }
+   |   expr IS NOT BOOL  						{ $$ = new AstExprUnary(AST_EXPR_UNARY, "IS_NOT_BOOL", 	$1); }
    ;
 
-expr:  expr BETWEEN expr AND expr %prec BETWEEN { $$ = new AstExprFunc("BETWEEN_AND", $1, $3, $5); }
+expr:  expr BETWEEN expr AND expr %prec BETWEEN { $$ = new AstExprFunc(AST_EXPR_FUNC, "BETWEEN_AND", $1, $3, $5); }
    ;
 
-expr_list: expr		             				{ $$ = new AstExprList($1, NULL);}
-   | expr ',' expr_list          				{ $$ = new AstExprList($1, $3); }
+expr_list: expr		             				{ $$ = new AstExprList(AST_EXPR_LIST, $1, NULL);}
+   | expr ',' expr_list          				{ $$ = new AstExprList(AST_EXPR_LIST, $1, $3); }
    | '(' expr_list ')'	  	     				{ $$ = $2; }	
    ;
 
-opt_expr_list:  expr_list        				{ $$ = new AstExprList($1, NULL); }  
-   | expr_list ',' opt_expr_list 				{ $$ = new AstExprList($1, $3); }
+opt_expr_list:  expr_list        				{ $$ = new AstExprList(AST_EXPR_LIST, $1, NULL); }  
+   | expr_list ',' opt_expr_list 				{ $$ = new AstExprList(AST_EXPR_LIST, $1, $3); }
    ;
 
-expr: expr IN '(' expr_list ')'                 { $$ = new AstExprCmpBinary("EXPR_IN_LIST", 		$1, $4); }  
-   |  '(' expr_list ')' IN '(' opt_expr_list ')'{ $$ = new AstExprCmpBinary("LIST_IN_LIST",			$2, $6); }
-   |  expr NOT IN '(' expr_list ')'             { $$ = new AstExprCmpBinary("EXPR_NOT_IN_LIST", 	$1, $5); }
-   | '(' expr_list ')' NOT IN  '(' expr_list ')'{ $$ = new AstExprCmpBinary("LIST_NOT_IN_LIST", 	$2, $7); }
-   | expr IN '(' select_stmt ')'			    { $$ = new AstExprCmpBinary("EXPR_IN_SELECT", 		$1, $4); }
-   | '(' expr_list ')' IN '(' select_stmt ')'	{ $$ = new AstExprCmpBinary("LIST_IN_SELECT", 		$2, $6); }
-   | expr NOT IN '(' select_stmt ')'		    { $$ = new AstExprCmpBinary("EXPR_NOT_IN_SELECT", 	$1, $5); }
-   |'(' expr_list ')' NOT IN '(' select_stmt ')'{ $$ = new AstExprCmpBinary("LIST_NOT_IN_SELECT", 	$2, $7); }
+expr: expr IN '(' expr_list ')'                 { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "EXPR_IN_LIST", 		$1, $4); }  
+   |  '(' expr_list ')' IN '(' opt_expr_list ')'{ $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "LIST_IN_LIST",			$2, $6); }
+   |  expr NOT IN '(' expr_list ')'             { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "EXPR_NOT_IN_LIST", 	$1, $5); }
+   | '(' expr_list ')' NOT IN  '(' expr_list ')'{ $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "LIST_NOT_IN_LIST", 	$2, $7); }
+   | expr IN '(' select_stmt ')'			    { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "EXPR_IN_SELECT", 		$1, $4); }
+   | '(' expr_list ')' IN '(' select_stmt ')'	{ $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "LIST_IN_SELECT", 		$2, $6); }
+   | expr NOT IN '(' select_stmt ')'		    { $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "EXPR_NOT_IN_SELECT", 	$1, $5); }
+   |'(' expr_list ')' NOT IN '(' select_stmt ')'{ $$ = new AstExprCmpBinary(AST_EXPR_CMP_BINARY, "LIST_NOT_IN_SELECT", 	$2, $7); }
    
-   | EXISTS '(' select_stmt ')'			        { $$ = new AstExprUnary("EXSIST", 		$3); }
-   | NOT EXISTS '(' select_stmt ')'	%dprec 2	{ $$ = new AstExprUnary("NOT_EXSIST", 	$4); } 
+   | EXISTS '(' select_stmt ')'			        { $$ = new AstExprUnary(AST_EXPR_UNARY, "EXSIST", 		$3); }
+   | NOT EXISTS '(' select_stmt ')'	%dprec 2	{ $$ = new AstExprUnary(AST_EXPR_UNARY, "NOT_EXSIST", 	$4); } 
    ;
 
   /* Is this used?
@@ -725,24 +725,24 @@ expr: NAME '(' opt_expr_list ')'	{ $$=newExprCal(t_expr_cal, "NAME", $1, 0, NULL
   
   /* functions with special syntax */
   
-expr: FCOUNT '(' '*' ')'	                    { $$ = new AstExprUnary("COUNT_ALL", NULL); }
-    | FCOUNT '(' expr ')'	                    { $$ = new AstExprUnary("COUNT",	 $3); }
-	| FSUM '(' expr ')'                         { $$ = new AstExprUnary("SUM",	 	 $3); }
-	| FAVG '(' expr ')'                         { $$ = new AstExprUnary("AVG",	 	 $3); }
-	| FMIN '(' expr ')'                         { $$ = new AstExprUnary("MIN",	 	 $3); }
-	| FMAX '(' expr ')'                         { $$ = new AstExprUnary("MAX",	 	 $3); }
+expr: FCOUNT '(' '*' ')'	                    { $$ = new AstExprUnary(AST_EXPR_UNARY, "COUNT_ALL", NULL); }
+    | FCOUNT '(' expr ')'	                    { $$ = new AstExprUnary(AST_EXPR_UNARY, "COUNT",	 $3); }
+	| FSUM '(' expr ')'                         { $$ = new AstExprUnary(AST_EXPR_UNARY, "SUM",	 	 $3); }
+	| FAVG '(' expr ')'                         { $$ = new AstExprUnary(AST_EXPR_UNARY, "AVG",	 	 $3); }
+	| FMIN '(' expr ')'                         { $$ = new AstExprUnary(AST_EXPR_UNARY, "MIN",	 	 $3); }
+	| FMAX '(' expr ')'                         { $$ = new AstExprUnary(AST_EXPR_UNARY, "MAX",	 	 $3); }
    
    ;
    
-expr: FSUBSTRING '(' expr ',' expr ')'		    { $$ = new AstExprFunc("SUBSTRING_EXPR_EXPR", 				$3, $5, 	NULL); }
-   | FSUBSTRING '(' expr FROM expr ')'		    { $$ = new AstExprFunc("SUBSTRING_EXPR_FROM_EXPR", 			$3, $5, 	NULL);}
-   | FSUBSTRING '(' expr ',' expr ',' expr ')'  { $$ = new AstExprFunc("SUBSTRING_EXPR_EXPR_EXPR", 			$3, $5, 	$7); }
-   | FSUBSTRING '(' expr FROM expr FOR expr ')' { $$ = new AstExprFunc("SUBSTRING_EXPR_FROM_EXPR_FOR_EXPR", $3, $5, 	$7); }
-   | FTRIM '(' expr ')'						    { $$ = new AstExprFunc("TRIM_TRAILING", 					$3, NULL, 	NULL); }
-   | FTRIM '(' trim_ltb expr FROM expr ')'	    { $$ = new AstExprFunc($3, 									$4, $6, 	NULL); }
-   | FUPPER '(' expr ')'   					    { $$ = new AstExprFunc("UPPER", 							$3, NULL,	NULL); }
-   | FCAST '(' expr AS cast_data_type ')'       { $$ = new AstExprFunc("CAST",								$3, $5,  	NULL); }
-   | FCOALESCE '(' expr_list ')'                { $$ = new AstExprFunc("COALESCE", 							$3, NULL, 	NULL); }
+expr: FSUBSTRING '(' expr ',' expr ')'		    { $$ = new AstExprFunc(AST_EXPR_FUNC, "SUBSTRING_EXPR_EXPR", 				$3, $5, 	NULL); }
+   | FSUBSTRING '(' expr FROM expr ')'		    { $$ = new AstExprFunc(AST_EXPR_FUNC, "SUBSTRING_EXPR_FROM_EXPR", 			$3, $5, 	NULL);}
+   | FSUBSTRING '(' expr ',' expr ',' expr ')'  { $$ = new AstExprFunc(AST_EXPR_FUNC, "SUBSTRING_EXPR_EXPR_EXPR", 			$3, $5, 	$7); }
+   | FSUBSTRING '(' expr FROM expr FOR expr ')' { $$ = new AstExprFunc(AST_EXPR_FUNC, "SUBSTRING_EXPR_FROM_EXPR_FOR_EXPR", $3, $5, 	$7); }
+   | FTRIM '(' expr ')'						    { $$ = new AstExprFunc(AST_EXPR_FUNC, "TRIM_TRAILING", 					$3, NULL, 	NULL); }
+   | FTRIM '(' trim_ltb expr FROM expr ')'	    { $$ = new AstExprFunc(AST_EXPR_FUNC, $3, 									$4, $6, 	NULL); }
+   | FUPPER '(' expr ')'   					    { $$ = new AstExprFunc(AST_EXPR_FUNC, "UPPER", 							$3, NULL,	NULL); }
+   | FCAST '(' expr AS cast_data_type ')'       { $$ = new AstExprFunc(AST_EXPR_FUNC, "CAST",								$3, $5,  	NULL); }
+   | FCOALESCE '(' expr_list ')'                { $$ = new AstExprFunc(AST_EXPR_FUNC, "COALESCE", 							$3, NULL, 	NULL); }
    ;
  
 trim_ltb: LEADING                               { $$="TRIM_LEADING"; }
@@ -751,46 +751,46 @@ trim_ltb: LEADING                               { $$="TRIM_LEADING"; }
    ;
    
 cast_data_type:	                                { $$ = NULL;}  
-   | INTEGER                                    {$$ = new AstExprConst("INT", 	NULL);}
-   | STRING                                     {$$ = new AstExprConst("STRING", NULL);}
-   | DOUBLE                                     {$$ = new AstExprConst("DOUBLE", NULL);}
-   | FLOAT                                      {$$ = new AstExprConst("FLOAT", 	NULL);}
-   | CHAR                                       {$$ = new AstExprConst("CHAR", 	NULL);}
+   | INTEGER                                    {$$ = new AstExprConst(AST_EXPR_CONST, "INT", 	NULL);}
+   | STRING                                     {$$ = new AstExprConst(AST_EXPR_CONST, "STRING", NULL);}
+   | DOUBLE                                     {$$ = new AstExprConst(AST_EXPR_CONST, "DOUBLE", NULL);}
+   | FLOAT                                      {$$ = new AstExprConst(AST_EXPR_CONST, "FLOAT", 	NULL);}
+   | CHAR                                       {$$ = new AstExprConst(AST_EXPR_CONST, "CHAR", 	NULL);}
    ;
    
-expr: FDATE_ADD '(' expr ',' interval_exp ')'   { $$ = new AstExprFunc("DATE_ADD", $3, $5, NULL); }
-   |  FDATE_SUB '(' expr ',' interval_exp ')'   { $$ = new AstExprFunc("DATE_SUB", $3, $5, NULL); }
+expr: FDATE_ADD '(' expr ',' interval_exp ')'   { $$ = new AstExprFunc(AST_EXPR_FUNC, "DATE_ADD", $3, $5, NULL); }
+   |  FDATE_SUB '(' expr ',' interval_exp ')'   { $$ = new AstExprFunc(AST_EXPR_FUNC, "DATE_SUB", $3, $5, NULL); }
    ;
    
 interval_exp: 
-    INTERVAL expr DAY_HOUR         	            { $$ = new AstExprFunc("INTERVAL_HOUR", 		$2, NULL, NULL);  }
-   | INTERVAL expr DAY_MICROSECOND              { $$ = new AstExprFunc("INTERVAL_MICROSECOND", 	$2, NULL, NULL);  }
-   | INTERVAL expr DAY_MINUTE                   { $$ = new AstExprFunc("INTERVAL_MINUTE", 		$2, NULL, NULL);  }
-   | INTERVAL expr DAY_SECOND                   { $$ = new AstExprFunc("INTERVAL_SECOND", 		$2, NULL, NULL);  }
-   | INTERVAL expr DAY                          { $$ = new AstExprFunc("INTERVAL_DAY", 			$2, NULL, NULL);  }
-   | INTERVAL expr YEAR_MONTH                   { $$ = new AstExprFunc("INTERVAL_MONTH", 		$2, NULL, NULL);  }
-   | INTERVAL expr YEAR                         { $$ = new AstExprFunc("INTERVAL_YEAR", 		$2, NULL, NULL);  }
-   | INTERVAL expr WEEK                         { $$ = new AstExprFunc("INTERVAL_WEEK", 		$2, NULL, NULL);  }
-   | INTERVAL expr QUARTER                      { $$ = new AstExprFunc("INTERVAL_QUARTER", 		$2, NULL, NULL);  }
+    INTERVAL expr DAY_HOUR         	            { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_HOUR", 		$2, NULL, NULL);  }
+   | INTERVAL expr DAY_MICROSECOND              { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_MICROSECOND", 	$2, NULL, NULL);  }
+   | INTERVAL expr DAY_MINUTE                   { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_MINUTE", 		$2, NULL, NULL);  }
+   | INTERVAL expr DAY_SECOND                   { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_SECOND", 		$2, NULL, NULL);  }
+   | INTERVAL expr DAY                          { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_DAY", 			$2, NULL, NULL);  }
+   | INTERVAL expr YEAR_MONTH                   { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_MONTH", 		$2, NULL, NULL);  }
+   | INTERVAL expr YEAR                         { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_YEAR", 		$2, NULL, NULL);  }
+   | INTERVAL expr WEEK                         { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_WEEK", 		$2, NULL, NULL);  }
+   | INTERVAL expr QUARTER                      { $$ = new AstExprFunc(AST_EXPR_FUNC, "INTERVAL_QUARTER", 		$2, NULL, NULL);  }
    ;   
    
 	
-expr: CASE expr case_list END			        { $$ = new AstExprFunc("CASE1", 		$2, 	$3, NULL); }
-   |  CASE expr case_list ELSE expr END	        { $$ = new AstExprFunc("CASE1_ELSE", 	$2, 	$3, $5); }   
-   |  CASE case_list END                        { $$ = new AstExprFunc("CASE2", 		NULL,	$2, NULL); }
-   |  CASE case_list ELSE expr END              { $$ = new AstExprFunc("CASE2_ELSE", 	NULL, 	$2, $4); }
+expr: CASE expr case_list END			        { $$ = new AstExprFunc(AST_EXPR_FUNC, "CASE1", 		$2, 	$3, NULL); }
+   |  CASE expr case_list ELSE expr END	        { $$ = new AstExprFunc(AST_EXPR_FUNC, "CASE1_ELSE", 	$2, 	$3, $5); }   
+   |  CASE case_list END                        { $$ = new AstExprFunc(AST_EXPR_FUNC, "CASE2", 		NULL,	$2, NULL); }
+   |  CASE case_list ELSE expr END              { $$ = new AstExprFunc(AST_EXPR_FUNC, "CASE2_ELSE", 	NULL, 	$2, $4); }
    ;
 
-case_list: WHEN expr THEN expr                  { $$ = new AstExprFunc("WHEN", $2, $4, NULL); }
-   | case_list WHEN expr THEN expr	            { $$ = new AstExprFunc("WHEN", $3, $5, $1); }
+case_list: WHEN expr THEN expr                  { $$ = new AstExprFunc(AST_EXPR_FUNC, "WHEN", $2, $4, NULL); }
+   | case_list WHEN expr THEN expr	            { $$ = new AstExprFunc(AST_EXPR_FUNC, "WHEN", $3, $5, $1); }
    ;
 
-expr: expr LIKE expr	                        { $$ = new AstExprCalBinary("LIKE", 	$1, $3); }
-   | expr NOT LIKE expr                         { $$ = new AstExprCalBinary("NOT_LIKE", $1, $4); }
+expr: expr LIKE expr	                        { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "LIKE", 	$1, $3); }
+   | expr NOT LIKE expr                         { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "NOT_LIKE", $1, $4); }
    ;
 
-expr: expr REGEXP expr		                    { $$ = new AstExprCalBinary("REGEXP", 		$1, $3); }
-   | expr NOT REGEXP expr	                    { $$ = new AstExprCalBinary("NOT_REGEXP", 	$1, $4); }
+expr: expr REGEXP expr		                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "REGEXP", 		$1, $3); }
+   | expr NOT REGEXP expr	                    { $$ = new AstExprCalBinary(AST_EXPR_CAL_BINARY, "NOT_REGEXP", 	$1, $4); }
    ;
 
 

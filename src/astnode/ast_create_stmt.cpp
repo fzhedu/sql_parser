@@ -189,10 +189,10 @@ void AstColumnAtts::Print(int level) const {
     cout << setw(level * TAB_SIZE) << " " << "Col Atts: ";
 
     if (type[0] == 1) {
-      cout << " <NOT NULLX> ";
+      cout << " <NOT NULL> ";
     }
     if (type[1] == 1) {
-      cout << " <NULLX> ";
+      cout << " <NULL> ";
     }
     if (type[2] == 1) {
       cout << " <DEFAULT," << default_string_ << "> ";

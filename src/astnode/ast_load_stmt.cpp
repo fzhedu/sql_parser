@@ -42,6 +42,6 @@ void AstLoadTable::Print(int level) const {
   cout << " Table name: " << table_name_ << endl;
   cout << setw(level * TAB_SIZE) << " " << " Path: " << endl;
   if (path_ != NULL) {
-    path_->Print(level);
+    path_->Print(++level);
   }
 }
